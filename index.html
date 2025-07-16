@@ -1,11 +1,13 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" ng-app="harmonyApp">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Harmony High School</title>
     <!-- Tailwind CSS CDN for utility classes -->
     <script src="https://cdn.tailwindcss.com"></script>
+    <!-- AngularJS CDN -->
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.8.2/angular.min.js"></script>
     <style>
         /* Custom styles for the image slideshow component */
         .image-container {
@@ -55,20 +57,20 @@
         }
     </style>
 </head>
-<body class="bg-gray-100 flex flex-col min-h-screen font-sans text-gray-800">
+<body class="bg-gray-100 flex flex-col min-h-screen font-sans text-gray-800" ng-controller="MainController">
 
     <!-- Header Section -->
     <header class="bg-blue-600 text-white p-4 shadow-md">
-        <div class="container mx-auto flex justify-between items-center">
-            <h1 class="text-2xl font-bold">Harmony High School</h1>
-            <nav>
-                <ul class="flex space-x-4">
-                    <li><button id="home-button" class="px-3 py-2 rounded-md hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50">Home</button></li>
-                    <li><button id="about-button" class="px-3 py-2 rounded-md hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50">About</button></li>
-                    <li><button id="contact-button" class="px-3 py-2 rounded-md hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50">Contact</button></li>
-                    <li><button id="login-button" class="px-3 py-2 rounded-md hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50">Login</button></li>
-                    <!-- Logout button, initially hidden -->
-                    <li><button id="logout-button" class="px-3 py-2 rounded-md bg-red-500 hover:bg-red-700 hidden focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-opacity-50">Logout</button></li>
+        <div class="container mx-auto flex justify-between items-center flex-wrap">
+            <h1 class="text-2xl font-bold mb-2 md:mb-0">Harmony High School</h1>
+            <nav class="w-full md:w-auto">
+                <ul class="flex flex-wrap justify-center md:justify-end space-x-2 md:space-x-4">
+                    <li><button ng-click="showSection('home')" class="px-3 py-2 rounded-md hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50 text-sm md:text-base" ng-show="!loggedInRole">Home</button></li>
+                    <li><button ng-click="showSection('about')" class="px-3 py-2 rounded-md hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50 text-sm md:text-base" ng-show="!loggedInRole">About</button></li>
+                    <li><button ng-click="showSection('contact')" class="px-3 py-2 rounded-md hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50 text-sm md:text-base" ng-show="!loggedInRole">Contact</button></li>
+                    <li><button ng-click="showSection('login')" class="px-3 py-2 rounded-md hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50 text-sm md:text-base" ng-show="!loggedInRole">Login</button></li>
+                    <!-- Logout button, shown when logged in -->
+                    <li><button ng-click="logout()" class="px-3 py-2 rounded-md bg-red-500 hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-opacity-50 text-sm md:text-base" ng-show="loggedInRole">Logout</button></li>
                 </ul>
             </nav>
         </div>
@@ -77,21 +79,21 @@
     <!-- Main Content Area -->
     <main class="flex-grow container mx-auto p-4 py-8">
         <!-- Home Section -->
-        <section id="home" class="bg-white shadow-lg rounded-xl p-6 mb-8">
-            <h2 class="text-4xl font-extrabold text-center text-blue-700 mb-6">Welcome to Harmony High School</h2>
-            <p class="text-lg text-gray-700 text-center mb-4 max-w-prose mx-auto">
+        <section id="home" ng-show="currentSection === 'home'" class="bg-white shadow-lg rounded-xl p-4 sm:p-6 mb-8">
+            <h2 class="text-2xl sm:text-3xl lg:text-4xl font-extrabold text-center text-blue-700 mb-4 sm:mb-6">Welcome to Harmony High School</h2>
+            <p class="text-base sm:text-lg text-gray-700 text-center mb-4 max-w-prose mx-auto">
                 At Harmony High School, we believe that education is more than just academics—it's about cultivating character, inspiring creativity, and building a vibrant, inclusive community. Located in the heart of our town, we are proud to be a diverse and forward-thinking school where every student is empowered to thrive.
             </p>
-            <p class="text-lg text-gray-700 text-center mb-8 max-w-prose mx-auto">
+            <p class="text-base sm:text-lg text-gray-700 text-center mb-6 sm:mb-8 max-w-prose mx-auto">
                 We offer a dynamic curriculum, passionate educators, and a wide array of extracurricular opportunities designed to help students grow into confident, compassionate, and capable young adults. Whether you’re exploring the arts, diving into science and technology, or making a difference through student leadership, Harmony is a place where your potential meets possibility.
             </p>
-            <p class="text-xl font-semibold text-center text-blue-600 mb-8">
+            <p class="text-lg sm:text-xl font-semibold text-center text-blue-600 mb-6 sm:mb-8">
                 Discover. Grow. Belong.
             </p>
 
             <!-- Image Slideshow Embedded within the Home Section -->
-            <div class="image-slideshow-wrapper w-full max-w-2xl mx-auto">
-                <h3 class="text-2xl font-semibold text-center text-gray-700 mb-4">Our Featured Moments</h3>
+            <div class="image-slideshow-wrapper w-full max-w-xl md:max-w-2xl mx-auto">
+                <h3 class="text-xl sm:text-2xl font-semibold text-center text-gray-700 mb-4">Our Featured Moments</h3>
                 <div class="image-container mx-auto rounded-xl shadow-md">
                     <!-- Image 1 (Updated URL) -->
                     <img src="https://cdn.pixabay.com/photo/2020/01/22/09/39/teacher-4784916_1280.jpg" alt="Teacher with students" class="active"
@@ -108,53 +110,53 @@
                 </div>
             </div>
 
-            <p class="text-md text-gray-600 text-center mt-8 max-w-prose mx-auto">
+            <p class="text-sm sm:text-md text-gray-600 text-center mt-6 sm:mt-8 max-w-prose mx-auto">
                 Welcome to your journey at Harmony High School.
             </p>
         </section>
 
-        <!-- About Section - Initially hidden -->
-        <section id="about-section" class="bg-white shadow-lg rounded-xl p-6 hidden">
-            <h2 class="text-3xl font-bold text-center text-gray-800 mb-4">About Us</h2>
-            <h3 class="text-2xl font-semibold text-gray-700 mb-2">Our Mission</h3>
-            <p class="text-gray-700 mb-4">
+        <!-- About Section -->
+        <section id="about-section" ng-show="currentSection === 'about'" class="bg-white shadow-lg rounded-xl p-4 sm:p-6">
+            <h2 class="text-2xl sm:text-3xl font-bold text-center text-gray-800 mb-4">About Us</h2>
+            <h3 class="text-xl sm:text-2xl font-semibold text-gray-700 mb-2">Our Mission</h3>
+            <p class="text-base text-gray-700 mb-3 sm:mb-4">
                 Harmony High School is committed to providing a safe, supportive, and stimulating learning environment where students are encouraged to achieve academic excellence, embrace diversity, and become responsible global citizens.
             </p>
-            <h3 class="text-2xl font-semibold text-gray-700 mb-2">Our Vision</h3>
-            <p class="text-gray-700 mb-4">
+            <h3 class="text-xl sm:text-2xl font-semibold text-gray-700 mb-2">Our Vision</h3>
+            <p class="text-base text-gray-700 mb-3 sm:mb-4">
                 We envision a school where every student is known, valued, and challenged to reach their highest potential. Through a culture of respect, innovation, and collaboration, we prepare our students not just for college and careers—but for life.
             </p>
-            <h3 class="text-2xl font-semibold text-gray-700 mb-2">Who We Are</h3>
-            <p class="text-gray-700 mb-4">
+            <h3 class="text-xl sm:text-2xl font-semibold text-gray-700 mb-2">Who We Are</h3>
+            <p class="text-base text-gray-700 mb-3 sm:mb-4">
                 Founded on the principles of equity, integrity, and opportunity, Harmony High School serves a vibrant student body from diverse backgrounds. Our dedicated faculty and staff are passionate about fostering both intellectual and personal growth. We believe that when students feel seen, heard, and supported, they can accomplish great things.
             </p>
-            <h3 class="text-2xl font-semibold text-gray-700 mb-2">What Sets Us Apart</h3>
-            <ul class="list-disc list-inside text-gray-700 mb-4 pl-4">
+            <h3 class="text-xl sm:text-2xl font-semibold text-gray-700 mb-2">What Sets Us Apart</h3>
+            <ul class="list-disc list-inside text-base text-gray-700 mb-3 sm:mb-4 pl-4">
                 <li>Comprehensive academic programs including AP, honors, and career pathways</li>
                 <li>Emphasis on arts, athletics, and community engagement</li>
                 <li>Strong commitment to student wellness and social-emotional learning</li>
                 <li>Safe, inclusive campus culture where all voices matter</li>
             </ul>
-            <p class="text-gray-700 text-center mt-6">
+            <p class="text-base text-gray-700 text-center mt-4 sm:mt-6">
                 Join us in building a future filled with promise, purpose, and Harmony.
             </p>
         </section>
 
-        <!-- Contact Section - Placeholder -->
-        <section id="contact-section" class="bg-white shadow-lg rounded-xl p-6 hidden">
-            <h2 class="text-3xl font-bold text-center text-gray-800 mb-4">Contact Us</h2>
-            <p class="text-gray-700 text-center">
+        <!-- Contact Section -->
+        <section id="contact-section" ng-show="currentSection === 'contact'" class="bg-white shadow-lg rounded-xl p-4 sm:p-6">
+            <h2 class="text-2xl sm:text-3xl font-bold text-center text-gray-800 mb-4">Contact Us</h2>
+            <p class="text-base text-gray-700 text-center">
                 You can reach us at contact@example.com.
             </p>
         </section>
 
         <!-- Login Section -->
-        <section id="login-section" class="bg-white shadow-lg rounded-xl p-6 hidden">
-            <h2 class="text-3xl font-bold text-center text-gray-800 mb-6">Login</h2>
-            <form id="login-form" class="max-w-md mx-auto">
+        <section id="login-section" ng-show="currentSection === 'login'" class="bg-white shadow-lg rounded-xl p-4 sm:p-6">
+            <h2 class="text-2xl sm:text-3xl font-bold text-center text-gray-800 mb-6">Login</h2>
+            <form ng-submit="login()" class="max-w-xs sm:max-w-md mx-auto">
                 <div class="mb-4">
-                    <label for="role" class="block text-gray-700 text-sm font-bold mb-2">Select Role:</label>
-                    <select id="role" name="role" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline">
+                    <label for="role" class="block text-gray-700 text-sm sm:text-base font-bold mb-2">Select Role:</label>
+                    <select id="role" ng-model="loginData.role" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline text-sm sm:text-base">
                         <option value="">-- Please select a role --</option>
                         <option value="admin">Admin</option>
                         <option value="teacher">Teacher</option>
@@ -162,71 +164,71 @@
                     </select>
                 </div>
                 <div class="mb-4">
-                    <label for="username" class="block text-gray-700 text-sm font-bold mb-2">Username:</label>
-                    <input type="text" id="username" name="username" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" placeholder="Enter your username">
+                    <label for="username" class="block text-gray-700 text-sm sm:text-base font-bold mb-2">Username:</label>
+                    <input type="text" id="username" ng-model="loginData.username" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline text-sm sm:text-base" placeholder="Enter your username">
                 </div>
                 <div class="mb-6">
-                    <label for="password" class="block text-gray-700 text-sm font-bold mb-2">Password:</label>
-                    <input type="password" id="password" name="password" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 mb-3 leading-tight focus:outline-none focus:shadow-outline" placeholder="Enter your password">
+                    <label for="password" class="block text-gray-700 text-sm sm:text-base font-bold mb-2">Password:</label>
+                    <input type="password" id="password" ng-model="loginData.password" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 mb-3 leading-tight focus:outline-none focus:shadow-outline text-sm sm:text-base" placeholder="Enter your password">
                 </div>
                 <div class="flex items-center justify-between">
-                    <button type="submit" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline">
+                    <button type="submit" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline text-sm sm:text-base">
                         Sign In
                     </button>
-                    <a class="inline-block align-baseline font-bold text-sm text-blue-500 hover:text-blue-800" href="#">
+                    <a class="inline-block align-baseline font-bold text-xs sm:text-sm text-blue-500 hover:text-blue-800" href="#">
                         Forgot Password?
                     </a>
                 </div>
-                <div id="login-message" class="mt-4 text-center text-red-500 hidden"></div>
+                <div ng-show="loginMessage" class="mt-4 text-center text-red-500 text-sm sm:text-base">{{ loginMessage }}</div>
             </form>
         </section>
 
         <!-- Admin Dashboard -->
-        <section id="admin-dashboard" class="bg-white shadow-lg rounded-xl p-6 hidden">
-            <h2 class="text-3xl font-bold text-center text-gray-800 mb-6">Admin Dashboard</h2>
-            <div class="text-center mb-6">
-                <button id="manage-students-btn" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded mr-4">Manage Students</button>
-                <button id="manage-teachers-btn" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">Manage Teachers</button>
+        <section id="admin-dashboard" ng-show="currentSection === 'admin-dashboard'" class="bg-white shadow-lg rounded-xl p-4 sm:p-6">
+            <h2 class="text-2xl sm:text-3xl font-bold text-center text-gray-800 mb-6">Admin Dashboard</h2>
+            <div class="text-center mb-6 flex flex-col sm:flex-row justify-center space-y-2 sm:space-y-0 sm:space-x-4">
+                <button ng-click="showAdminSubSection('students')" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded text-sm sm:text-base">Manage Students</button>
+                <button ng-click="showAdminSubSection('teachers')" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded text-sm sm:text-base">Manage Teachers</button>
             </div>
 
             <!-- Admin - Manage Students Section -->
-            <div id="admin-students-management" class="hidden">
-                <h3 class="text-2xl font-bold text-gray-700 mb-4">Manage Student Details</h3>
+            <div id="admin-students-management" ng-show="adminSubSection === 'students'">
+                <h3 class="text-xl sm:text-2xl font-bold text-gray-700 mb-4">Manage Student Details</h3>
                 
                 <!-- Add/Update Student Form -->
-                <form id="student-form" class="mb-8 p-4 border rounded-md bg-gray-50">
-                    <h4 class="text-xl font-semibold mb-3">Add/Update Student</h4>
-                    <input type="hidden" id="student-id">
+                <form ng-submit="saveStudent()" class="mb-8 p-4 border rounded-md bg-gray-50">
+                    <h4 class="text-lg sm:text-xl font-semibold mb-3">{{ editingStudent.id ? 'Edit Student' : 'Add New Student' }}</h4>
                     <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
                         <div>
                             <label for="student-mgmt-name" class="block text-gray-700 text-sm font-bold mb-1">Name:</label>
-                            <input type="text" id="student-mgmt-name" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" placeholder="Student Name">
+                            <input type="text" id="student-mgmt-name" ng-model="editingStudent.name" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline text-sm" placeholder="Student Name" required>
                         </div>
                         <div>
                             <label for="student-mgmt-age" class="block text-gray-700 text-sm font-bold mb-1">Age:</label>
-                            <input type="number" id="student-mgmt-age" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" placeholder="Student Age">
+                            <input type="number" id="student-mgmt-age" ng-model="editingStudent.age" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline text-sm" placeholder="Student Age" required>
                         </div>
                         <div>
                             <label for="student-mgmt-class" class="block text-gray-700 text-sm font-bold mb-1">Class:</label>
-                            <input type="text" id="student-mgmt-class" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" placeholder="Class (e.g., 10th)">
+                            <input type="text" id="student-mgmt-class" ng-model="editingStudent.class" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline text-sm" placeholder="Class (e.g., 10th)" required>
                         </div>
                         <div>
                             <label for="student-mgmt-section" class="block text-gray-700 text-sm font-bold mb-1">Section:</label>
-                            <input type="text" id="student-mgmt-section" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" placeholder="Section (e.g., A)">
+                            <input type="text" id="student-mgmt-section" ng-model="editingStudent.section" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline text-sm" placeholder="Section (e.g., A)" required>
                         </div>
                         <div class="md:col-span-2">
                             <label for="student-mgmt-course" class="block text-gray-700 text-sm font-bold mb-1">Course:</label>
-                            <input type="text" id="student-mgmt-course" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" placeholder="Course (e.g., Science)">
+                            <input type="text" id="student-mgmt-course" ng-model="editingStudent.course" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline text-sm" placeholder="Course (e.g., Science)" required>
                         </div>
                     </div>
                     <div class="flex justify-end">
-                        <button type="submit" class="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline">Save Student</button>
+                        <button type="submit" class="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded text-sm sm:text-base focus:outline-none focus:shadow-outline">Save Student</button>
+                        <button type="button" ng-click="cancelEditStudent()" ng-show="editingStudent.id" class="ml-2 bg-gray-400 hover:bg-gray-600 text-white font-bold py-2 px-4 rounded text-sm sm:text-base focus:outline-none focus:shadow-outline">Cancel</button>
                     </div>
                 </form>
 
                 <!-- Student List Table -->
                 <div class="overflow-x-auto">
-                    <table id="students-table" class="min-w-full bg-white border border-gray-200 rounded-md">
+                    <table class="min-w-full bg-white border border-gray-200 rounded-md text-sm">
                         <thead>
                             <tr class="bg-gray-100 border-b">
                                 <th class="py-2 px-4">Name</th>
@@ -238,50 +240,63 @@
                             </tr>
                         </thead>
                         <tbody>
-                            <!-- Student rows will be rendered here by JavaScript -->
+                            <tr ng-repeat="student in students">
+                                <td class="py-2 px-4">{{ student.name }}</td>
+                                <td class="py-2 px-4">{{ student.age }}</td>
+                                <td class="py-2 px-4">{{ student.class }}</td>
+                                <td class="py-2 px-4">{{ student.section }}</td>
+                                <td class="py-2 px-4">{{ student.course }}</td>
+                                <td class="py-2 px-4">
+                                    <button ng-click="editStudent(student)" class="bg-yellow-500 hover:bg-yellow-700 text-white text-sm py-1 px-2 rounded mr-2">Edit</button>
+                                    <button ng-click="deleteStudent(student.id)" class="bg-red-500 hover:bg-red-700 text-white text-sm py-1 px-2 rounded">Delete</button>
+                                </td>
+                            </tr>
+                            <tr ng-if="students.length === 0">
+                                <td colspan="6" class="py-4 text-center text-gray-500">No students added yet.</td>
+                            </tr>
                         </tbody>
                     </table>
                 </div>
             </div>
 
             <!-- Admin - Manage Teachers Section -->
-            <div id="admin-teachers-management" class="hidden">
-                <h3 class="text-2xl font-bold text-gray-700 mb-4">Manage Teacher Details</h3>
+            <div id="admin-teachers-management" ng-show="adminSubSection === 'teachers'">
+                <h3 class="text-xl sm:text-2xl font-bold text-gray-700 mb-4">Manage Teacher Details</h3>
                 
                 <!-- Add/Update Teacher Form -->
-                <form id="teacher-form" class="mb-8 p-4 border rounded-md bg-gray-50">
-                    <h4 class="text-xl font-semibold mb-3">Add/Update Teacher</h4>
-                    <input type="hidden" id="teacher-id">
+                <form ng-submit="saveTeacher()" class="mb-8 p-4 border rounded-md bg-gray-50">
+                    <h4 class="text-lg sm:text-xl font-semibold mb-3">{{ editingTeacher.id ? 'Edit Teacher' : 'Add New Teacher' }}</h4>
                     <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
                         <div>
                             <label for="teacher-mgmt-name" class="block text-gray-700 text-sm font-bold mb-1">Name:</label>
-                            <input type="text" id="teacher-mgmt-name" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" placeholder="Teacher Name">
+                            <input type="text" id="teacher-mgmt-name" ng-model="editingTeacher.name" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline text-sm" placeholder="Teacher Name" required>
                         </div>
                         <div>
                             <label for="teacher-mgmt-subject" class="block text-gray-700 text-sm font-bold mb-1">Subject:</label>
-                            <input type="text" id="teacher-mgmt-subject" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" placeholder="Subject Taught">
+                            <input type="text" id="teacher-mgmt-subject" ng-model="editingTeacher.subject" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline text-sm" placeholder="Subject Taught" required>
                         </div>
                         <div>
                             <label for="teacher-mgmt-experience" class="block text-gray-700 text-sm font-bold mb-1">Experience (Years):</label>
-                            <input type="number" id="teacher-mgmt-experience" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" placeholder="Years of Experience">
+                            <input type="number" id="teacher-mgmt-experience" ng-model="editingTeacher.experience" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline text-sm" placeholder="Years of Experience" required>
                         </div>
                         <div>
                             <label for="teacher-mgmt-qualification" class="block text-gray-700 text-sm font-bold mb-1">Qualification:</label>
-                            <input type="text" id="teacher-mgmt-qualification" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" placeholder="Highest Qualification">
+                            <input type="text" id="teacher-mgmt-qualification" ng-model="editingTeacher.qualification" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline text-sm" placeholder="Highest Qualification" required>
                         </div>
                         <div class="md:col-span-2">
                             <label for="teacher-mgmt-contact" class="block text-gray-700 text-sm font-bold mb-1">Contact:</label>
-                            <input type="email" id="teacher-mgmt-contact" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" placeholder="Email or Phone">
+                            <input type="email" id="teacher-mgmt-contact" ng-model="editingTeacher.contact" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline text-sm" placeholder="Email or Phone" required>
                         </div>
                     </div>
                     <div class="flex justify-end">
-                        <button type="submit" class="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline">Save Teacher</button>
+                        <button type="submit" class="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded text-sm sm:text-base focus:outline-none focus:shadow-outline">Save Teacher</button>
+                        <button type="button" ng-click="cancelEditTeacher()" ng-show="editingTeacher.id" class="ml-2 bg-gray-400 hover:bg-gray-600 text-white font-bold py-2 px-4 rounded text-sm sm:text-base focus:outline-none focus:shadow-outline">Cancel</button>
                     </div>
                 </form>
 
                 <!-- Teacher List Table -->
                 <div class="overflow-x-auto">
-                    <table id="teachers-table" class="min-w-full bg-white border border-gray-200 rounded-md">
+                    <table class="min-w-full bg-white border border-gray-200 rounded-md text-sm">
                         <thead>
                             <tr class="bg-gray-100 border-b">
                                 <th class="py-2 px-4">Name</th>
@@ -293,7 +308,20 @@
                             </tr>
                         </thead>
                         <tbody>
-                            <!-- Teacher rows will be rendered here by JavaScript -->
+                            <tr ng-repeat="teacher in teachers">
+                                <td class="py-2 px-4">{{ teacher.name }}</td>
+                                <td class="py-2 px-4">{{ teacher.subject }}</td>
+                                <td class="py-2 px-4">{{ teacher.experience }}</td>
+                                <td class="py-2 px-4">{{ teacher.qualification }}</td>
+                                <td class="py-2 px-4">{{ teacher.contact }}</td>
+                                <td class="py-2 px-4">
+                                    <button ng-click="editTeacher(teacher)" class="bg-yellow-500 hover:bg-yellow-700 text-white text-sm py-1 px-2 rounded mr-2">Edit</button>
+                                    <button ng-click="deleteTeacher(teacher.id)" class="bg-red-500 hover:bg-red-700 text-white text-sm py-1 px-2 rounded">Delete</button>
+                                </td>
+                            </tr>
+                            <tr ng-if="teachers.length === 0">
+                                <td colspan="6" class="py-4 text-center text-gray-500">No teachers added yet.</td>
+                            </tr>
                         </tbody>
                     </table>
                 </div>
@@ -301,11 +329,11 @@
         </section>
 
         <!-- Teacher Dashboard -->
-        <section id="teacher-dashboard" class="bg-white shadow-lg rounded-xl p-6 hidden">
-            <h2 class="text-3xl font-bold text-center text-gray-800 mb-6">Teacher Dashboard</h2>
-            <p class="text-lg text-gray-700 mb-4">Welcome, Teacher! Here are your students' details:</p>
+        <section id="teacher-dashboard" ng-show="currentSection === 'teacher-dashboard'" class="bg-white shadow-lg rounded-xl p-4 sm:p-6">
+            <h2 class="text-2xl sm:text-3xl font-bold text-center text-gray-800 mb-6">Teacher Dashboard</h2>
+            <p class="text-base text-gray-700 mb-4">Welcome, Teacher! Here are your students' details:</p>
             <div class="overflow-x-auto">
-                <table id="teacher-students-table" class="min-w-full bg-white border border-gray-200 rounded-md">
+                <table class="min-w-full bg-white border border-gray-200 rounded-md text-sm">
                     <thead>
                         <tr class="bg-gray-100 border-b">
                             <th class="py-2 px-4 text-left text-sm font-semibold text-gray-600">Student Name</th>
@@ -317,582 +345,356 @@
                         </tr>
                     </thead>
                     <tbody>
-                        <!-- Student rows with grade inputs will be rendered here by JavaScript -->
+                        <tr ng-repeat="student in students">
+                            <td class="py-2 px-4">{{ student.name }}</td>
+                            <td class="py-2 px-4">{{ student.class }}</td>
+                            <td class="py-2 px-4">{{ student.section }}</td>
+                            <td class="py-2 px-4">{{ student.course }}</td>
+                            <td class="py-2 px-4">
+                                <button ng-if="student.document" class="bg-blue-500 hover:bg-blue-700 text-white text-sm py-1 px-2 rounded" ng-click="downloadDocument(student.document)">Download PDF</button>
+                                <span ng-if="!student.document">N/A</span>
+                            </td>
+                            <td class="py-2 px-4">
+                                <input type="text" ng-model="student.grade" class="w-20 border rounded px-2 py-1 text-sm" placeholder="Grade">
+                            </td>
+                        </tr>
+                        <tr ng-if="students.length === 0">
+                            <td colspan="6" class="py-4 text-center text-gray-500">No students to display.</td>
+                        </tr>
                     </tbody>
                 </table>
             </div>
             <div class="text-center mt-6">
-                <button id="submit-grades-btn" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline">
+                <button ng-click="submitGrades()" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded text-sm sm:text-base focus:outline-none focus:shadow-outline">
                     Submit All Grades
                 </button>
             </div>
-            <div id="teacher-message" class="mt-4 text-center text-green-500 hidden"></div>
+            <div ng-show="teacherMessage" class="mt-4 text-center text-sm sm:text-base" ng-class="{'text-green-500': teacherMessageSuccess, 'text-red-500': !teacherMessageSuccess}">{{ teacherMessage }}</div>
         </section>
 
         <!-- Student Dashboard -->
-        <section id="student-dashboard" class="bg-white shadow-lg rounded-xl p-6 hidden">
-            <h2 class="text-3xl font-bold text-center text-gray-800 mb-6">Student Dashboard</h2>
-            <p class="text-lg text-gray-700 mb-4">Welcome, Student! Update your details and upload documents here:</p>
-            <form id="student-dashboard-form" class="max-w-md mx-auto">
+        <section id="student-dashboard" ng-show="currentSection === 'student-dashboard'" class="bg-white shadow-lg rounded-xl p-4 sm:p-6">
+            <h2 class="text-2xl sm:text-3xl font-bold text-center text-gray-800 mb-6">Student Dashboard</h2>
+            <p class="text-base text-gray-700 mb-4">Welcome, Student! Update your details and upload documents here:</p>
+            <form ng-submit="saveStudentDetails()" class="max-w-xs sm:max-w-md mx-auto">
                 <div class="mb-4">
-                    <label for="student-name" class="block text-gray-700 text-sm font-bold mb-2">Name:</label>
-                    <input type="text" id="student-name" name="student-name" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" placeholder="Your Full Name">
+                    <label for="student-name-dash" class="block text-gray-700 text-sm sm:text-base font-bold mb-2">Name:</label>
+                    <input type="text" id="student-name-dash" ng-model="currentStudentDetails.name" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline text-sm sm:text-base" placeholder="Your Full Name" required>
                 </div>
-                <div class="mb-4 flex space-x-4">
-                    <div class="w-1/2">
-                        <label for="student-class" class="block text-gray-700 text-sm font-bold mb-2">Class:</label>
-                        <input type="text" id="student-class" name="student-class" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" placeholder="e.g., 10th">
+                <div class="mb-4 flex flex-col sm:flex-row sm:space-x-4 space-y-4 sm:space-y-0">
+                    <div class="w-full sm:w-1/2">
+                        <label for="student-class-dash" class="block text-gray-700 text-sm sm:text-base font-bold mb-2">Class:</label>
+                        <input type="text" id="student-class-dash" ng-model="currentStudentDetails.class" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline text-sm sm:text-base" placeholder="e.g., 10th" required>
                     </div>
-                    <div class="w-1/2">
-                        <label for="student-section" class="block text-gray-700 text-sm font-bold mb-2">Section:</label>
-                        <input type="text" id="student-section" name="student-section" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" placeholder="e.g., A">
+                    <div class="w-full sm:w-1/2">
+                        <label for="student-section-dash" class="block text-gray-700 text-sm sm:text-base font-bold mb-2">Section:</label>
+                        <input type="text" id="student-section-dash" ng-model="currentStudentDetails.section" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline text-sm sm:text-base" placeholder="e.g., A" required>
                     </div>
                 </div>
                 <div class="mb-4">
-                    <label for="student-course" class="block text-gray-700 text-sm font-bold mb-2">Course:</label>
-                    <input type="text" id="student-course" name="student-course" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" placeholder="e.g., Computer Science">
+                    <label for="student-course-dash" class="block text-gray-700 text-sm sm:text-base font-bold mb-2">Course:</label>
+                    <input type="text" id="student-course-dash" ng-model="currentStudentDetails.course" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline text-sm sm:text-base" placeholder="e.g., Computer Science" required>
                 </div>
                 <div class="mb-6">
-                    <label for="pdf-upload" class="block w-full text-sm text-gray-700 font-bold mb-2">Upload Document (PDF):</label>
-                    <input type="file" id="pdf-upload" name="pdf-upload" accept=".pdf" class="block w-full text-sm text-gray-700
+                    <label for="pdf-upload-dash" class="block w-full text-sm sm:text-base text-gray-700 font-bold mb-2">Upload Document (PDF):</label>
+                    <!-- This input needs a directive for ng-model to work with files or plain JS -->
+                    <input type="file" id="pdf-upload-dash" name="pdf-upload" accept=".pdf" onchange="angular.element(this).scope().setPdfFile(this.files[0])" class="block w-full text-sm sm:text-base text-gray-700
                         file:mr-4 file:py-2 file:px-4
                         file:rounded-full file:border-0
-                        file:text-sm file:font-semibold
+                        file:text-sm sm:file:text-base file:font-semibold
                         file:bg-blue-50 file:text-blue-700
                         hover:file:bg-blue-100">
                 </div>
                 <div class="flex items-center justify-center">
-                    <button type="submit" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline">
+                    <button type="submit" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline text-sm sm:text-base">
                         Save Details
                     </button>
                 </div>
-                <div id="student-dashboard-message" class="mt-4 text-center text-red-500 hidden"></div>
+                <div ng-show="studentDashboardMessage" class="mt-4 text-center text-sm sm:text-base" ng-class="{'text-green-500': studentDashboardMessageSuccess, 'text-red-500': !studentDashboardMessageSuccess}">{{ studentDashboardMessage }}</div>
             </form>
         </section>
     </main>
 
     <!-- Footer Section -->
     <footer class="bg-gray-800 text-white p-4 mt-8">
-        <div class="container mx-auto text-center">
+        <div class="container mx-auto text-center text-sm sm:text-base">
             <p>&copy; 2025 Harmony High School. All rights reserved.</p>
         </div>
     </footer>
 
     <script>
-        document.addEventListener('DOMContentLoaded', () => {
-            // --- Image Slideshow Logic ---
-            const images = document.querySelectorAll('.image-container img');
-            let currentImageIndex = 0;
+        // AngularJS Module and Controller
+        angular.module('harmonyApp', [])
+        .controller('MainController', ['$scope', '$timeout', function($scope, $timeout) {
+            // --- Application State ---
+            $scope.currentSection = 'home'; // Controls which main section is visible
+            $scope.loggedInRole = null; // Stores 'admin', 'teacher', 'student', or null
+            $scope.loginData = {}; // Data for the login form
+            $scope.loginMessage = ''; // Message for login attempts
 
-            function showImage(index) {
-                images.forEach((img) => {
-                    img.classList.remove('active');
-                });
-                images[index].classList.add('active');
-            }
+            $scope.adminSubSection = 'students'; // Controls 'students' or 'teachers' view in admin dashboard
 
-            function nextImage() {
-                currentImageIndex = (currentImageIndex + 1) % images.length;
-                showImage(currentImageIndex);
-            }
-
-            showImage(currentImageIndex);
-            setInterval(nextImage, 5000);
-
-            // --- Section Elements ---
-            const homeSection = document.getElementById('home');
-            const aboutSection = document.getElementById('about-section');
-            const contactSection = document.getElementById('contact-section');
-            const loginSection = document.getElementById('login-section');
-            const adminDashboard = document.getElementById('admin-dashboard');
-            const teacherDashboard = document.getElementById('teacher-dashboard');
-            const studentDashboard = document.getElementById('student-dashboard');
-
-            // --- Admin Sub-sections ---
-            const adminStudentsManagement = document.getElementById('admin-students-management');
-            const adminTeachersManagement = document.getElementById('admin-teachers-management');
-
-            // --- Navigation Buttons ---
-            const homeButton = document.getElementById('home-button');
-            const aboutButton = document.getElementById('about-button');
-            const contactButton = document.getElementById('contact-button');
-            const loginButton = document.getElementById('login-button');
-            const logoutButton = document.getElementById('logout-button');
-
-            // --- Login Form Elements ---
-            const loginForm = document.getElementById('login-form');
-            const loginMessage = document.getElementById('login-message');
-
-            // --- Admin Dashboard Buttons ---
-            const manageStudentsBtn = document.getElementById('manage-students-btn');
-            const manageTeachersBtn = document.getElementById('manage-teachers-btn');
-
-            // --- Admin Student Form Elements ---
-            const studentForm = document.getElementById('student-form');
-            const studentIdInput = document.getElementById('student-id');
-            const studentNameInput = document.getElementById('student-mgmt-name');
-            const studentAgeInput = document.getElementById('student-mgmt-age');
-            const studentClassInput = document.getElementById('student-mgmt-class');
-            const studentSectionInput = document.getElementById('student-mgmt-section');
-            const studentCourseInput = document.getElementById('student-mgmt-course');
-            const studentsTableBody = document.querySelector('#students-table tbody');
-
-            // --- Admin Teacher Form Elements ---
-            const teacherForm = document.getElementById('teacher-form');
-            const teacherIdInput = document.getElementById('teacher-id');
-            const teacherNameInput = document.getElementById('teacher-mgmt-name');
-            const teacherSubjectInput = document.getElementById('teacher-mgmt-subject');
-            const teacherExperienceInput = document.getElementById('teacher-mgmt-experience');
-            const teacherQualificationInput = document.getElementById('teacher-mgmt-qualification');
-            const teacherContactInput = document.getElementById('teacher-mgmt-contact');
-            const teachersTableBody = document.querySelector('#teachers-table tbody');
-
-            // --- Teacher Dashboard Elements ---
-            const teacherStudentsTableBody = document.querySelector('#teacher-students-table tbody');
-            const submitGradesBtn = document.getElementById('submit-grades-btn');
-            const teacherMessage = document.getElementById('teacher-message');
-
-            // --- Student Dashboard Elements ---
-            const studentDashboardForm = document.getElementById('student-dashboard-form');
-            const studentDashboardNameInput = document.getElementById('student-name');
-            const studentDashboardClassInput = document.getElementById('student-class');
-            const studentDashboardSectionInput = document.getElementById('student-section');
-            const studentDashboardCourseInput = document.getElementById('student-course');
-            const studentDashboardPdfUpload = document.getElementById('pdf-upload');
-            const studentDashboardMessage = document.getElementById('student-dashboard-message');
-
-
-            let loggedInRole = null; // To keep track of the logged-in user's role
-            let students = [ // Mock student data
+            // Mock Data (In a real app, this would come from a backend/database)
+            $scope.students = [
                 { id: 1, name: 'John Doe', age: 16, class: '10th', section: 'A', course: 'Mathematics', document: 'john_math_hw.pdf', grade: '' },
                 { id: 2, name: 'Jane Smith', age: 15, class: '9th', section: 'B', course: 'Science', document: 'jane_science_project.pdf', grade: '' },
                 { id: 3, name: 'Mike Johnson', age: 17, class: '11th', section: 'C', course: 'History', document: 'mike_history_essay.pdf', grade: '' }
             ];
-            let teachers = [ // Mock teacher data
+            $scope.teachers = [
                 { id: 1, name: 'Mr. Davis', subject: 'Mathematics', experience: 10, qualification: 'M.Sc. Math', contact: 'davis@harmony.edu' },
                 { id: 2, name: 'Ms. White', subject: 'Science', experience: 8, qualification: 'Ph.D. Biology', contact: 'white@harmony.edu' }
             ];
 
-            // --- Utility Functions ---
+            $scope.editingStudent = {}; // Used for admin student edit form
+            $scope.editingTeacher = {}; // Used for admin teacher edit form
+            $scope.teacherMessage = ''; // Message for teacher dashboard actions
+            $scope.teacherMessageSuccess = false;
 
-            /**
-             * Hides all content sections and admin sub-sections.
-             */
-            function hideAllSections() {
-                homeSection.classList.add('hidden');
-                aboutSection.classList.add('hidden');
-                contactSection.classList.add('hidden');
-                loginSection.classList.add('hidden');
-                adminDashboard.classList.add('hidden');
-                teacherDashboard.classList.add('hidden');
-                studentDashboard.classList.add('hidden');
-                adminStudentsManagement.classList.add('hidden');
-                adminTeachersManagement.classList.add('hidden');
-            }
+            $scope.currentStudentDetails = {}; // Used for student dashboard form
+            $scope.studentDashboardMessage = ''; // Message for student dashboard actions
+            $scope.studentDashboardMessageSuccess = false;
+            $scope.uploadedPdfFile = null; // For student PDF upload
 
-            /**
-             * Shows a specific section and hides all others.
-             * @param {HTMLElement} sectionToShow - The section element to display.
-             */
-            function showSection(sectionToShow) {
-                hideAllSections();
-                sectionToShow.classList.remove('hidden');
-            }
-
-            /**
-             * Updates the visibility of navigation buttons based on login status.
-             */
-            function updateNavButtons() {
-                if (loggedInRole) {
-                    loginButton.classList.add('hidden');
-                    logoutButton.classList.remove('hidden');
-                    homeButton.classList.add('hidden');
-                    aboutButton.classList.add('hidden');
-                    contactButton.classList.add('hidden');
-                } else {
-                    loginButton.classList.remove('hidden');
-                    logoutButton.classList.add('hidden');
-                    homeButton.classList.remove('hidden');
-                    aboutButton.classList.remove('hidden');
-                    contactButton.classList.remove('hidden');
+            // --- Section Visibility Logic ---
+            $scope.showSection = function(sectionName) {
+                $scope.currentSection = sectionName;
+                // If navigating to admin dashboard, default to students management
+                if (sectionName === 'admin-dashboard') {
+                    $scope.adminSubSection = 'students';
                 }
-            }
+                // If navigating to student dashboard, pre-fill current student details
+                if (sectionName === 'student-dashboard') {
+                    // Mocking for student with ID 1. In a real app, this would be the logged-in student.
+                    const studentData = $scope.students.find(s => s.id === 1);
+                    $scope.currentStudentDetails = studentData ? angular.copy(studentData) : {};
+                }
+            };
 
-            // --- Admin Dashboard Functions ---
+            // --- Login/Logout Logic ---
+            $scope.login = function() {
+                const { role, username, password } = $scope.loginData;
+                $scope.loginMessage = ''; // Clear previous messages
 
-            /**
-             * Renders the students table in the admin dashboard.
-             */
-            function renderStudentsTable() {
-                studentsTableBody.innerHTML = ''; // Clear existing rows
-                students.forEach(student => {
-                    const row = studentsTableBody.insertRow();
-                    row.innerHTML = `
-                        <td class="py-2 px-4">${student.name}</td>
-                        <td class="py-2 px-4">${student.age}</td>
-                        <td class="py-2 px-4">${student.class}</td>
-                        <td class="py-2 px-4">${student.section}</td>
-                        <td class="py-2 px-4">${student.course}</td>
-                        <td class="py-2 px-4">
-                            <button data-id="${student.id}" class="edit-student-btn bg-yellow-500 hover:bg-yellow-700 text-white text-sm py-1 px-2 rounded mr-2">Edit</button>
-                            <button data-id="${student.id}" class="delete-student-btn bg-red-500 hover:bg-red-700 text-white text-sm py-1 px-2 rounded">Delete</button>
-                        </td>
-                    `;
-                });
-
-                // Add event listeners for edit and delete buttons
-                document.querySelectorAll('.edit-student-btn').forEach(button => {
-                    button.addEventListener('click', (event) => {
-                        const id = parseInt(event.target.dataset.id);
-                        const studentToEdit = students.find(s => s.id === id);
-                        if (studentToEdit) {
-                            studentIdInput.value = studentToEdit.id;
-                            studentNameInput.value = studentToEdit.name;
-                            studentAgeInput.value = studentToEdit.age;
-                            studentClassInput.value = studentToEdit.class;
-                            studentSectionInput.value = studentToEdit.section;
-                            studentCourseInput.value = studentToEdit.course;
-                        }
-                    });
-                });
-
-                document.querySelectorAll('.delete-student-btn').forEach(button => {
-                    button.addEventListener('click', (event) => {
-                        const id = parseInt(event.target.dataset.id);
-                        students = students.filter(s => s.id !== id);
-                        renderStudentsTable(); // Re-render table after deletion
-                        renderTeacherStudentsTable(); // Update teacher's view as well
-                    });
-                });
-            }
-
-            /**
-             * Handles adding or updating a student.
-             */
-            studentForm.addEventListener('submit', (event) => {
-                event.preventDefault();
-                const id = studentIdInput.value ? parseInt(studentIdInput.value) : null;
-                const name = studentNameInput.value.trim();
-                const age = parseInt(studentAgeInput.value);
-                const studentClass = studentClassInput.value.trim();
-                const section = studentSectionInput.value.trim();
-                const course = studentCourseInput.value.trim();
-
-                if (!name || !age || !studentClass || !section || !course) {
-                    alert('Please fill in all student fields.'); // Using alert for simplicity, replace with custom modal
+                if (!role || !username || !password) {
+                    $scope.loginMessage = 'Please fill in all fields.';
                     return;
                 }
 
-                if (id) {
+                let isAuthenticated = false;
+                let dashboardSection = '';
+
+                if (role === 'admin' && username === 'admin' && password === 'admin') {
+                    isAuthenticated = true;
+                    dashboardSection = 'admin-dashboard';
+                } else if (role === 'teacher' && username === 'teacher' && password === 'teacher') {
+                    isAuthenticated = true;
+                    dashboardSection = 'teacher-dashboard';
+                } else if (role === 'student' && username === 'student' && password === 'student') {
+                    isAuthenticated = true;
+                    dashboardSection = 'student-dashboard';
+                }
+
+                if (isAuthenticated) {
+                    $scope.loggedInRole = role;
+                    $scope.showSection(dashboardSection);
+                    $scope.loginData = {}; // Clear form
+                } else {
+                    $scope.loginMessage = 'Invalid role, username, or password.';
+                }
+            };
+
+            $scope.logout = function() {
+                $scope.loggedInRole = null;
+                $scope.showSection('home');
+                $scope.loginData = {}; // Clear any lingering login form data
+                $scope.loginMessage = ''; // Clear any login messages
+                $scope.editingStudent = {}; // Clear admin form
+                $scope.editingTeacher = {}; // Clear admin form
+                $scope.teacherMessage = ''; // Clear teacher message
+                $scope.studentDashboardMessage = ''; // Clear student message
+                $scope.currentStudentDetails = {}; // Clear student dashboard form
+                $scope.uploadedPdfFile = null;
+            };
+
+            // --- Admin Dashboard Functions ---
+            $scope.showAdminSubSection = function(subSection) {
+                $scope.adminSubSection = subSection;
+                $scope.editingStudent = {}; // Clear edit state when switching
+                $scope.editingTeacher = {}; // Clear edit state when switching
+            };
+
+            $scope.saveStudent = function() {
+                if (!$scope.editingStudent.name || !$scope.editingStudent.age || !$scope.editingStudent.class || !$scope.editingStudent.section || !$scope.editingStudent.course) {
+                    alert('Please fill in all student fields.'); // Use custom modal in production
+                    return;
+                }
+
+                if ($scope.editingStudent.id) {
                     // Update existing student
-                    const index = students.findIndex(s => s.id === id);
+                    const index = $scope.students.findIndex(s => s.id === $scope.editingStudent.id);
                     if (index !== -1) {
-                        students[index] = { ...students[index], name, age, class: studentClass, section, course };
+                        $scope.students[index] = angular.copy($scope.editingStudent);
                     }
                 } else {
                     // Add new student
-                    const newId = students.length > 0 ? Math.max(...students.map(s => s.id)) + 1 : 1;
-                    students.push({ id: newId, name, age, class: studentClass, section, course, document: '', grade: '' });
+                    const newId = $scope.students.length > 0 ? Math.max(...$scope.students.map(s => s.id)) + 1 : 1;
+                    const newStudent = angular.copy($scope.editingStudent);
+                    newStudent.id = newId;
+                    newStudent.document = ''; // Default for new student
+                    newStudent.grade = ''; // Default for new student
+                    $scope.students.push(newStudent);
                 }
-                studentForm.reset(); // Clear form
-                studentIdInput.value = ''; // Clear hidden ID
-                renderStudentsTable(); // Re-render table
-                renderTeacherStudentsTable(); // Update teacher's view
-            });
+                $scope.editingStudent = {}; // Clear form after save
+            };
 
-            /**
-             * Renders the teachers table in the admin dashboard.
-             */
-            function renderTeachersTable() {
-                teachersTableBody.innerHTML = ''; // Clear existing rows
-                teachers.forEach(teacher => {
-                    const row = teachersTableBody.insertRow();
-                    row.innerHTML = `
-                        <td class="py-2 px-4">${teacher.name}</td>
-                        <td class="py-2 px-4">${teacher.subject}</td>
-                        <td class="py-2 px-4">${teacher.experience}</td>
-                        <td class="py-2 px-4">${teacher.qualification}</td>
-                        <td class="py-2 px-4">${teacher.contact}</td>
-                        <td class="py-2 px-4">
-                            <button data-id="${teacher.id}" class="edit-teacher-btn bg-yellow-500 hover:bg-yellow-700 text-white text-sm py-1 px-2 rounded mr-2">Edit</button>
-                            <button data-id="${teacher.id}" class="delete-teacher-btn bg-red-500 hover:bg-red-700 text-white text-sm py-1 px-2 rounded">Delete</button>
-                        </td>
-                    `;
-                });
+            $scope.editStudent = function(student) {
+                $scope.editingStudent = angular.copy(student); // Create a copy for editing
+            };
 
-                // Add event listeners for edit and delete buttons
-                document.querySelectorAll('.edit-teacher-btn').forEach(button => {
-                    button.addEventListener('click', (event) => {
-                        const id = parseInt(event.target.dataset.id);
-                        const teacherToEdit = teachers.find(t => t.id === id);
-                        if (teacherToEdit) {
-                            teacherIdInput.value = teacherToEdit.id;
-                            teacherNameInput.value = teacherToEdit.name;
-                            teacherSubjectInput.value = teacherToEdit.subject;
-                            teacherExperienceInput.value = teacherToEdit.experience;
-                            teacherQualificationInput.value = teacherToEdit.qualification;
-                            teacherContactInput.value = teacherToEdit.contact;
-                        }
-                    });
-                });
+            $scope.cancelEditStudent = function() {
+                $scope.editingStudent = {}; // Clear the editing state
+            };
 
-                document.querySelectorAll('.delete-teacher-btn').forEach(button => {
-                    button.addEventListener('click', (event) => {
-                        const id = parseInt(event.target.dataset.id);
-                        teachers = teachers.filter(t => t.id !== id);
-                        renderTeachersTable(); // Re-render table after deletion
-                    });
-                });
-            }
+            $scope.deleteStudent = function(id) {
+                if (confirm('Are you sure you want to delete this student?')) { // Use custom modal in production
+                    $scope.students = $scope.students.filter(s => s.id !== id);
+                }
+            };
 
-            /**
-             * Handles adding or updating a teacher.
-             */
-            teacherForm.addEventListener('submit', (event) => {
-                event.preventDefault();
-                const id = teacherIdInput.value ? parseInt(teacherIdInput.value) : null;
-                const name = teacherNameInput.value.trim();
-                const subject = teacherSubjectInput.value.trim();
-                const experience = parseInt(teacherExperienceInput.value);
-                const qualification = teacherQualificationInput.value.trim();
-                const contact = teacherContactInput.value.trim();
-
-                if (!name || !subject || !experience || !qualification || !contact) {
-                    alert('Please fill in all teacher fields.'); // Using alert for simplicity, replace with custom modal
+            $scope.saveTeacher = function() {
+                if (!$scope.editingTeacher.name || !$scope.editingTeacher.subject || !$scope.editingTeacher.experience || !$scope.editingTeacher.qualification || !$scope.editingTeacher.contact) {
+                    alert('Please fill in all teacher fields.'); // Use custom modal in production
                     return;
                 }
 
-                if (id) {
+                if ($scope.editingTeacher.id) {
                     // Update existing teacher
-                    const index = teachers.findIndex(t => t.id === id);
+                    const index = $scope.teachers.findIndex(t => t.id === $scope.editingTeacher.id);
                     if (index !== -1) {
-                        teachers[index] = { ...teachers[index], name, subject, experience, qualification, contact };
+                        $scope.teachers[index] = angular.copy($scope.editingTeacher);
                     }
                 } else {
                     // Add new teacher
-                    const newId = teachers.length > 0 ? Math.max(...teachers.map(t => t.id)) + 1 : 1;
-                    teachers.push({ id: newId, name, subject, experience, qualification, contact });
+                    const newId = $scope.teachers.length > 0 ? Math.max(...$scope.teachers.map(t => t.id)) + 1 : 1;
+                    const newTeacher = angular.copy($scope.editingTeacher);
+                    newTeacher.id = newId;
+                    $scope.teachers.push(newTeacher);
                 }
-                teacherForm.reset(); // Clear form
-                teacherIdInput.value = ''; // Clear hidden ID
-                renderTeachersTable(); // Re-render table
-            });
+                $scope.editingTeacher = {}; // Clear form after save
+            };
+
+            $scope.editTeacher = function(teacher) {
+                $scope.editingTeacher = angular.copy(teacher); // Create a copy for editing
+            };
+
+            $scope.cancelEditTeacher = function() {
+                $scope.editingTeacher = {}; // Clear the editing state
+            };
+
+            $scope.deleteTeacher = function(id) {
+                if (confirm('Are you sure you want to delete this teacher?')) { // Use custom modal in production
+                    $scope.teachers = $scope.teachers.filter(t => t.id !== id);
+                }
+            };
 
             // --- Teacher Dashboard Functions ---
+            $scope.downloadDocument = function(docName) {
+                alert(`Simulating download of: ${docName}`); // Replace with actual download logic
+            };
 
-            /**
-             * Renders the students table for the teacher dashboard.
-             */
-            function renderTeacherStudentsTable() {
-                teacherStudentsTableBody.innerHTML = ''; // Clear existing rows
-                students.forEach(student => {
-                    const row = teacherStudentsTableBody.insertRow();
-                    row.innerHTML = `
-                        <td class="py-2 px-4">${student.name}</td>
-                        <td class="py-2 px-4">${student.class}</td>
-                        <td class="py-2 px-4">${student.section}</td>
-                        <td class="py-2 px-4">${student.course}</td>
-                        <td class="py-2 px-4">
-                            ${student.document ? `<button class="bg-blue-500 hover:bg-blue-700 text-white text-sm py-1 px-2 rounded" onclick="alert('Downloading ${student.document}...')">Download PDF</button>` : 'N/A'}
-                        </td>
-                        <td class="py-2 px-4">
-                            <input type="text" data-id="${student.id}" class="grade-input w-20 border rounded px-2 py-1 text-sm" placeholder="Grade" value="${student.grade}">
-                        </td>
-                    `;
-                });
-            }
-
-            /**
-             * Handles submitting all grades from the teacher dashboard.
-             */
-            submitGradesBtn.addEventListener('click', () => {
-                const gradeInputs = document.querySelectorAll('.grade-input');
+            $scope.submitGrades = function() {
                 let gradesUpdated = false;
-                gradeInputs.forEach(input => {
-                    const studentId = parseInt(input.dataset.id);
-                    const newGrade = input.value.trim();
-                    const studentIndex = students.findIndex(s => s.id === studentId);
-                    if (studentIndex !== -1 && students[studentIndex].grade !== newGrade) {
-                        students[studentIndex].grade = newGrade;
+                // In a real app, you'd send these updated grades to a backend
+                // For now, we assume changes are already in $scope.students due to ng-model
+                $scope.students.forEach(student => {
+                    // Check if grade was actually changed (simple check)
+                    // More robust check would involve comparing with initial state or a dirty flag
+                    if (student.grade !== undefined && student.grade !== null && student.grade !== '') {
                         gradesUpdated = true;
                     }
                 });
 
                 if (gradesUpdated) {
-                    teacherMessage.textContent = 'Grades submitted successfully!';
-                    teacherMessage.classList.remove('hidden');
-                    teacherMessage.classList.remove('text-red-500');
-                    teacherMessage.classList.add('text-green-500');
+                    $scope.teacherMessage = 'Grades submitted successfully!';
+                    $scope.teacherMessageSuccess = true;
                 } else {
-                    teacherMessage.textContent = 'No grades were changed.';
-                    teacherMessage.classList.remove('hidden');
-                    teacherMessage.classList.remove('text-green-500');
-                    teacherMessage.classList.add('text-red-500');
+                    $scope.teacherMessage = 'No grades were changed.';
+                    $scope.teacherMessageSuccess = false;
                 }
-                // Hide message after a few seconds
-                setTimeout(() => {
-                    teacherMessage.classList.add('hidden');
+                $timeout(function() {
+                    $scope.teacherMessage = '';
                 }, 3000);
-            });
+            };
 
             // --- Student Dashboard Functions ---
+            $scope.setPdfFile = function(file) {
+                $scope.uploadedPdfFile = file;
+                // Manually trigger digest cycle if this function is called from outside Angular context
+                if (!$scope.$$phase) {
+                    $scope.$apply();
+                }
+            };
 
-            /**
-             * Handles saving student details from the student dashboard.
-             */
-            studentDashboardForm.addEventListener('submit', (event) => {
-                event.preventDefault();
-                const name = studentDashboardNameInput.value.trim();
-                const studentClass = studentDashboardClassInput.value.trim();
-                const section = studentDashboardSectionInput.value.trim();
-                const course = studentDashboardCourseInput.value.trim();
-                const pdfFile = studentDashboardPdfUpload.files[0];
-
-                studentDashboardMessage.classList.add('hidden'); // Hide previous messages
+            $scope.saveStudentDetails = function() {
+                const { name, class: studentClass, section, course } = $scope.currentStudentDetails;
+                $scope.studentDashboardMessage = '';
 
                 if (!name || !studentClass || !section || !course) {
-                    studentDashboardMessage.textContent = 'Please fill in all required fields (Name, Class, Section, Course).';
-                    studentDashboardMessage.classList.remove('hidden');
-                    studentDashboardMessage.classList.remove('text-green-500');
-                    studentDashboardMessage.classList.add('text-red-500');
+                    $scope.studentDashboardMessage = 'Please fill in all required fields (Name, Class, Section, Course).';
+                    $scope.studentDashboardMessageSuccess = false;
                     return;
                 }
 
-                // In a real application, you would handle PDF upload to a server here.
-                // For this mock, we just acknowledge the file.
-                let documentName = '';
-                if (pdfFile) {
-                    documentName = pdfFile.name;
-                    // Simulate upload success
-                    console.log(`Simulating PDF upload: ${documentName}`);
-                }
+                // Simulate saving details for the current student (mocking for ID 1)
+                const studentIndex = $scope.students.findIndex(s => s.id === 1);
+                if (studentIndex !== -1) {
+                    $scope.students[studentIndex].name = name;
+                    $scope.students[studentIndex].class = studentClass;
+                    $scope.students[studentIndex].section = section;
+                    $scope.students[studentIndex].course = course;
 
-                // For simplicity, let's assume the student dashboard updates a specific student (e.g., student with ID 1)
-                // In a real app, this would be tied to the logged-in student's ID.
-                const studentToUpdateIndex = students.findIndex(s => s.id === 1); // Mocking update for first student
-                if (studentToUpdateIndex !== -1) {
-                    students[studentToUpdateIndex].name = name;
-                    students[studentToUpdateIndex].class = studentClass;
-                    students[studentToUpdateIndex].section = section;
-                    students[studentToUpdateIndex].course = course;
-                    if (documentName) {
-                        students[studentToUpdateIndex].document = documentName;
+                    if ($scope.uploadedPdfFile) {
+                        $scope.students[studentIndex].document = $scope.uploadedPdfFile.name;
+                        console.log(`Simulating PDF upload: ${$scope.uploadedPdfFile.name}`);
+                        $scope.uploadedPdfFile = null; // Clear file input
+                        document.getElementById('pdf-upload-dash').value = ''; // Clear file input visually
                     }
-                    studentDashboardMessage.textContent = 'Student details saved successfully!';
-                    studentDashboardMessage.classList.remove('hidden');
-                    studentDashboardMessage.classList.remove('text-red-500');
-                    studentDashboardMessage.classList.add('text-green-500');
+                    $scope.studentDashboardMessage = 'Student details saved successfully!';
+                    $scope.studentDashboardMessageSuccess = true;
                 } else {
-                    studentDashboardMessage.textContent = 'Error: Could not find student to update.';
-                    studentDashboardMessage.classList.remove('hidden');
-                    studentDashboardMessage.classList.remove('text-green-500');
-                    studentDashboardMessage.classList.add('text-red-500');
+                    $scope.studentDashboardMessage = 'Error: Could not find student to update.';
+                    $scope.studentDashboardMessageSuccess = false;
                 }
 
-                // Update teacher's view after student details are saved
-                renderTeacherStudentsTable();
-
-                // Hide message after a few seconds
-                setTimeout(() => {
-                    studentDashboardMessage.classList.add('hidden');
+                $timeout(function() {
+                    $scope.studentDashboardMessage = '';
                 }, 3000);
-            });
+            };
 
+            // --- Image Slideshow (Vanilla JS - no Angular needed for this part) ---
+            document.addEventListener('DOMContentLoaded', () => {
+                const images = document.querySelectorAll('.image-container img');
+                let currentImageIndex = 0;
 
-            // --- Event Listeners for Navigation Buttons ---
-            homeButton.addEventListener('click', () => {
-                showSection(homeSection);
-            });
-
-            aboutButton.addEventListener('click', () => {
-                showSection(aboutSection);
-            });
-
-            contactButton.addEventListener('click', () => {
-                showSection(contactSection);
-            });
-
-            loginButton.addEventListener('click', () => {
-                showSection(loginSection);
-            });
-
-            logoutButton.addEventListener('click', () => {
-                loggedInRole = null; // Clear the logged-in role
-                showSection(homeSection); // Go back to the home page
-                updateNavButtons(); // Update navigation buttons
-            });
-
-            // --- Login Form Submission ---
-            loginForm.addEventListener('submit', (event) => {
-                event.preventDefault();
-
-                const role = document.getElementById('role').value;
-                const username = document.getElementById('username').value;
-                const password = document.getElementById('password').value;
-
-                loginMessage.classList.add('hidden');
-
-                if (!role || !username || !password) {
-                    loginMessage.textContent = 'Please fill in all fields.';
-                    loginMessage.classList.remove('hidden');
-                    return;
+                function showImage(index) {
+                    images.forEach((img) => {
+                        img.classList.remove('active');
+                    });
+                    images[index].classList.add('active');
                 }
 
-                let isAuthenticated = false;
-                let dashboardToShow = null;
-
-                if (role === 'admin' && username === 'admin' && password === 'admin') {
-                    isAuthenticated = true;
-                    dashboardToShow = adminDashboard;
-                    renderStudentsTable(); // Render tables when admin logs in
-                    renderTeachersTable();
-                    adminStudentsManagement.classList.remove('hidden'); // Show students management by default for admin
-                    adminTeachersManagement.classList.add('hidden');
-                } else if (role === 'teacher' && username === 'teacher' && password === 'teacher') {
-                    isAuthenticated = true;
-                    dashboardToShow = teacherDashboard;
-                    renderTeacherStudentsTable(); // Render students for teacher
-                } else if (role === 'student' && username === 'student' && password === 'student') {
-                    isAuthenticated = true;
-                    dashboardToShow = studentDashboard;
-                    // Pre-fill student dashboard form if data exists (mocking for student with ID 1)
-                    const currentStudent = students.find(s => s.id === 1);
-                    if (currentStudent) {
-                        studentDashboardNameInput.value = currentStudent.name;
-                        studentDashboardClassInput.value = currentStudent.class;
-                        studentDashboardSectionInput.value = currentStudent.section;
-                        studentDashboardCourseInput.value = currentStudent.course;
-                    }
+                function nextImage() {
+                    currentImageIndex = (currentImageIndex + 1) % images.length;
+                    showImage(currentImageIndex);
                 }
 
-                if (isAuthenticated) {
-                    loggedInRole = role;
-                    showSection(dashboardToShow);
-                    updateNavButtons();
-                    loginForm.reset();
-                } else {
-                    loginMessage.textContent = 'Invalid role, username, or password.';
-                    loginMessage.classList.remove('hidden');
-                }
+                showImage(currentImageIndex);
+                setInterval(nextImage, 5000);
             });
 
-            // --- Admin Dashboard Sub-section Navigation ---
-            manageStudentsBtn.addEventListener('click', () => {
-                adminStudentsManagement.classList.remove('hidden');
-                adminTeachersManagement.classList.add('hidden');
-                renderStudentsTable(); // Ensure table is up-to-date
-            });
-
-            manageTeachersBtn.addEventListener('click', () => {
-                adminTeachersManagement.classList.remove('hidden');
-                adminStudentsManagement.classList.add('hidden');
-                renderTeachersTable(); // Ensure table is up-to-date
-            });
-
-            // Initial setup
-            showSection(homeSection);
-            updateNavButtons();
-        });
+            // Initial setup - show home section on load
+            $scope.showSection('home');
+        }]);
     </script>
 </body>
 </html>
