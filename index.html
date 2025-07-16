@@ -1,0 +1,898 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Harmony High School</title>
+    <!-- Tailwind CSS CDN for utility classes -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        /* Custom styles for the image slideshow component */
+        .image-container {
+            position: relative;
+            width: 100%;
+            max-width: 800px; /* Max width for the slideshow within the home section */
+            aspect-ratio: 16 / 9; /* Maintain a consistent aspect ratio for images */
+            overflow: hidden;
+        }
+
+        .image-container img {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover; /* Cover the container without distortion */
+            opacity: 0; /* Start hidden for transition effect */
+            transition: opacity 1s ease-in-out; /* Smooth fade transition */
+            border-radius: 1rem; /* Rounded corners for images */
+        }
+
+        .image-container img.active {
+            opacity: 1; /* Make the active image visible */
+        }
+
+        /* General table styling */
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 1.5rem;
+        }
+        th, td {
+            padding: 0.75rem;
+            text-align: left;
+            border-bottom: 1px solid #e2e8f0; /* Tailwind gray-200 */
+        }
+        th {
+            background-color: #f8fafc; /* Tailwind gray-50 */
+            font-weight: 600;
+            color: #4a5568; /* Tailwind gray-700 */
+            font-size: 0.875rem; /* text-sm */
+            text-transform: uppercase;
+        }
+        tr:last-child td {
+            border-bottom: none;
+        }
+    </style>
+</head>
+<body class="bg-gray-100 flex flex-col min-h-screen font-sans text-gray-800">
+
+    <!-- Header Section -->
+    <header class="bg-blue-600 text-white p-4 shadow-md">
+        <div class="container mx-auto flex justify-between items-center">
+            <h1 class="text-2xl font-bold">Harmony High School</h1>
+            <nav>
+                <ul class="flex space-x-4">
+                    <li><button id="home-button" class="px-3 py-2 rounded-md hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50">Home</button></li>
+                    <li><button id="about-button" class="px-3 py-2 rounded-md hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50">About</button></li>
+                    <li><button id="contact-button" class="px-3 py-2 rounded-md hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50">Contact</button></li>
+                    <li><button id="login-button" class="px-3 py-2 rounded-md hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50">Login</button></li>
+                    <!-- Logout button, initially hidden -->
+                    <li><button id="logout-button" class="px-3 py-2 rounded-md bg-red-500 hover:bg-red-700 hidden focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-opacity-50">Logout</button></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Main Content Area -->
+    <main class="flex-grow container mx-auto p-4 py-8">
+        <!-- Home Section -->
+        <section id="home" class="bg-white shadow-lg rounded-xl p-6 mb-8">
+            <h2 class="text-4xl font-extrabold text-center text-blue-700 mb-6">Welcome to Harmony High School</h2>
+            <p class="text-lg text-gray-700 text-center mb-4 max-w-prose mx-auto">
+                At Harmony High School, we believe that education is more than just academics—it's about cultivating character, inspiring creativity, and building a vibrant, inclusive community. Located in the heart of our town, we are proud to be a diverse and forward-thinking school where every student is empowered to thrive.
+            </p>
+            <p class="text-lg text-gray-700 text-center mb-8 max-w-prose mx-auto">
+                We offer a dynamic curriculum, passionate educators, and a wide array of extracurricular opportunities designed to help students grow into confident, compassionate, and capable young adults. Whether you’re exploring the arts, diving into science and technology, or making a difference through student leadership, Harmony is a place where your potential meets possibility.
+            </p>
+            <p class="text-xl font-semibold text-center text-blue-600 mb-8">
+                Discover. Grow. Belong.
+            </p>
+
+            <!-- Image Slideshow Embedded within the Home Section -->
+            <div class="image-slideshow-wrapper w-full max-w-2xl mx-auto">
+                <h3 class="text-2xl font-semibold text-center text-gray-700 mb-4">Our Featured Moments</h3>
+                <div class="image-container mx-auto rounded-xl shadow-md">
+                    <!-- Image 1 (Updated URL) -->
+                    <img src="https://cdn.pixabay.com/photo/2020/01/22/09/39/teacher-4784916_1280.jpg" alt="Teacher with students" class="active"
+                         onerror="this.onerror=null;this.src='https://placehold.co/800x450/cccccc/333333?text=Image+1+Not+Found';">
+                    <!-- Image 2 -->
+                    <img src="https://cdn.pixabay.com/photo/2017/07/31/09/52/basketball-2557076_1280.jpg" alt="Basketball player"
+                         onerror="this.onerror=null;this.src='https://placehold.co/800x450/cccccc/333333?text=Image+2+Not+Found';">
+                    <!-- Image 3 -->
+                    <img src="https://cdn.pixabay.com/photo/2014/03/12/18/45/boys-286245_1280.jpg" alt="Boys playing"
+                         onerror="this.onerror=null;this.src='https://placehold.co/800x450/cccccc/333333?text=Image+3+Not+Found';">
+                    <!-- Image 4 -->
+                    <img src="https://cdn.pixabay.com/photo/2021/09/28/20/42/kids-6665603_1280.jpg" alt="Kids playing outdoors"
+                         onerror="this.onerror=null;this.src='https://placehold.co/800x450/cccccc/333333?text=Image+4+Not+Found';">
+                </div>
+            </div>
+
+            <p class="text-md text-gray-600 text-center mt-8 max-w-prose mx-auto">
+                Welcome to your journey at Harmony High School.
+            </p>
+        </section>
+
+        <!-- About Section - Initially hidden -->
+        <section id="about-section" class="bg-white shadow-lg rounded-xl p-6 hidden">
+            <h2 class="text-3xl font-bold text-center text-gray-800 mb-4">About Us</h2>
+            <h3 class="text-2xl font-semibold text-gray-700 mb-2">Our Mission</h3>
+            <p class="text-gray-700 mb-4">
+                Harmony High School is committed to providing a safe, supportive, and stimulating learning environment where students are encouraged to achieve academic excellence, embrace diversity, and become responsible global citizens.
+            </p>
+            <h3 class="text-2xl font-semibold text-gray-700 mb-2">Our Vision</h3>
+            <p class="text-gray-700 mb-4">
+                We envision a school where every student is known, valued, and challenged to reach their highest potential. Through a culture of respect, innovation, and collaboration, we prepare our students not just for college and careers—but for life.
+            </p>
+            <h3 class="text-2xl font-semibold text-gray-700 mb-2">Who We Are</h3>
+            <p class="text-gray-700 mb-4">
+                Founded on the principles of equity, integrity, and opportunity, Harmony High School serves a vibrant student body from diverse backgrounds. Our dedicated faculty and staff are passionate about fostering both intellectual and personal growth. We believe that when students feel seen, heard, and supported, they can accomplish great things.
+            </p>
+            <h3 class="text-2xl font-semibold text-gray-700 mb-2">What Sets Us Apart</h3>
+            <ul class="list-disc list-inside text-gray-700 mb-4 pl-4">
+                <li>Comprehensive academic programs including AP, honors, and career pathways</li>
+                <li>Emphasis on arts, athletics, and community engagement</li>
+                <li>Strong commitment to student wellness and social-emotional learning</li>
+                <li>Safe, inclusive campus culture where all voices matter</li>
+            </ul>
+            <p class="text-gray-700 text-center mt-6">
+                Join us in building a future filled with promise, purpose, and Harmony.
+            </p>
+        </section>
+
+        <!-- Contact Section - Placeholder -->
+        <section id="contact-section" class="bg-white shadow-lg rounded-xl p-6 hidden">
+            <h2 class="text-3xl font-bold text-center text-gray-800 mb-4">Contact Us</h2>
+            <p class="text-gray-700 text-center">
+                You can reach us at contact@example.com.
+            </p>
+        </section>
+
+        <!-- Login Section -->
+        <section id="login-section" class="bg-white shadow-lg rounded-xl p-6 hidden">
+            <h2 class="text-3xl font-bold text-center text-gray-800 mb-6">Login</h2>
+            <form id="login-form" class="max-w-md mx-auto">
+                <div class="mb-4">
+                    <label for="role" class="block text-gray-700 text-sm font-bold mb-2">Select Role:</label>
+                    <select id="role" name="role" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline">
+                        <option value="">-- Please select a role --</option>
+                        <option value="admin">Admin</option>
+                        <option value="teacher">Teacher</option>
+                        <option value="student">Student</option>
+                    </select>
+                </div>
+                <div class="mb-4">
+                    <label for="username" class="block text-gray-700 text-sm font-bold mb-2">Username:</label>
+                    <input type="text" id="username" name="username" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" placeholder="Enter your username">
+                </div>
+                <div class="mb-6">
+                    <label for="password" class="block text-gray-700 text-sm font-bold mb-2">Password:</label>
+                    <input type="password" id="password" name="password" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 mb-3 leading-tight focus:outline-none focus:shadow-outline" placeholder="Enter your password">
+                </div>
+                <div class="flex items-center justify-between">
+                    <button type="submit" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline">
+                        Sign In
+                    </button>
+                    <a class="inline-block align-baseline font-bold text-sm text-blue-500 hover:text-blue-800" href="#">
+                        Forgot Password?
+                    </a>
+                </div>
+                <div id="login-message" class="mt-4 text-center text-red-500 hidden"></div>
+            </form>
+        </section>
+
+        <!-- Admin Dashboard -->
+        <section id="admin-dashboard" class="bg-white shadow-lg rounded-xl p-6 hidden">
+            <h2 class="text-3xl font-bold text-center text-gray-800 mb-6">Admin Dashboard</h2>
+            <div class="text-center mb-6">
+                <button id="manage-students-btn" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded mr-4">Manage Students</button>
+                <button id="manage-teachers-btn" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">Manage Teachers</button>
+            </div>
+
+            <!-- Admin - Manage Students Section -->
+            <div id="admin-students-management" class="hidden">
+                <h3 class="text-2xl font-bold text-gray-700 mb-4">Manage Student Details</h3>
+                
+                <!-- Add/Update Student Form -->
+                <form id="student-form" class="mb-8 p-4 border rounded-md bg-gray-50">
+                    <h4 class="text-xl font-semibold mb-3">Add/Update Student</h4>
+                    <input type="hidden" id="student-id">
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
+                        <div>
+                            <label for="student-mgmt-name" class="block text-gray-700 text-sm font-bold mb-1">Name:</label>
+                            <input type="text" id="student-mgmt-name" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" placeholder="Student Name">
+                        </div>
+                        <div>
+                            <label for="student-mgmt-age" class="block text-gray-700 text-sm font-bold mb-1">Age:</label>
+                            <input type="number" id="student-mgmt-age" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" placeholder="Student Age">
+                        </div>
+                        <div>
+                            <label for="student-mgmt-class" class="block text-gray-700 text-sm font-bold mb-1">Class:</label>
+                            <input type="text" id="student-mgmt-class" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" placeholder="Class (e.g., 10th)">
+                        </div>
+                        <div>
+                            <label for="student-mgmt-section" class="block text-gray-700 text-sm font-bold mb-1">Section:</label>
+                            <input type="text" id="student-mgmt-section" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" placeholder="Section (e.g., A)">
+                        </div>
+                        <div class="md:col-span-2">
+                            <label for="student-mgmt-course" class="block text-gray-700 text-sm font-bold mb-1">Course:</label>
+                            <input type="text" id="student-mgmt-course" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" placeholder="Course (e.g., Science)">
+                        </div>
+                    </div>
+                    <div class="flex justify-end">
+                        <button type="submit" class="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline">Save Student</button>
+                    </div>
+                </form>
+
+                <!-- Student List Table -->
+                <div class="overflow-x-auto">
+                    <table id="students-table" class="min-w-full bg-white border border-gray-200 rounded-md">
+                        <thead>
+                            <tr class="bg-gray-100 border-b">
+                                <th class="py-2 px-4">Name</th>
+                                <th class="py-2 px-4">Age</th>
+                                <th class="py-2 px-4">Class</th>
+                                <th class="py-2 px-4">Section</th>
+                                <th class="py-2 px-4">Course</th>
+                                <th class="py-2 px-4">Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <!-- Student rows will be rendered here by JavaScript -->
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <!-- Admin - Manage Teachers Section -->
+            <div id="admin-teachers-management" class="hidden">
+                <h3 class="text-2xl font-bold text-gray-700 mb-4">Manage Teacher Details</h3>
+                
+                <!-- Add/Update Teacher Form -->
+                <form id="teacher-form" class="mb-8 p-4 border rounded-md bg-gray-50">
+                    <h4 class="text-xl font-semibold mb-3">Add/Update Teacher</h4>
+                    <input type="hidden" id="teacher-id">
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
+                        <div>
+                            <label for="teacher-mgmt-name" class="block text-gray-700 text-sm font-bold mb-1">Name:</label>
+                            <input type="text" id="teacher-mgmt-name" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" placeholder="Teacher Name">
+                        </div>
+                        <div>
+                            <label for="teacher-mgmt-subject" class="block text-gray-700 text-sm font-bold mb-1">Subject:</label>
+                            <input type="text" id="teacher-mgmt-subject" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" placeholder="Subject Taught">
+                        </div>
+                        <div>
+                            <label for="teacher-mgmt-experience" class="block text-gray-700 text-sm font-bold mb-1">Experience (Years):</label>
+                            <input type="number" id="teacher-mgmt-experience" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" placeholder="Years of Experience">
+                        </div>
+                        <div>
+                            <label for="teacher-mgmt-qualification" class="block text-gray-700 text-sm font-bold mb-1">Qualification:</label>
+                            <input type="text" id="teacher-mgmt-qualification" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" placeholder="Highest Qualification">
+                        </div>
+                        <div class="md:col-span-2">
+                            <label for="teacher-mgmt-contact" class="block text-gray-700 text-sm font-bold mb-1">Contact:</label>
+                            <input type="email" id="teacher-mgmt-contact" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" placeholder="Email or Phone">
+                        </div>
+                    </div>
+                    <div class="flex justify-end">
+                        <button type="submit" class="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline">Save Teacher</button>
+                    </div>
+                </form>
+
+                <!-- Teacher List Table -->
+                <div class="overflow-x-auto">
+                    <table id="teachers-table" class="min-w-full bg-white border border-gray-200 rounded-md">
+                        <thead>
+                            <tr class="bg-gray-100 border-b">
+                                <th class="py-2 px-4">Name</th>
+                                <th class="py-2 px-4">Subject</th>
+                                <th class="py-2 px-4">Experience</th>
+                                <th class="py-2 px-4">Qualification</th>
+                                <th class="py-2 px-4">Contact</th>
+                                <th class="py-2 px-4">Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <!-- Teacher rows will be rendered here by JavaScript -->
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </section>
+
+        <!-- Teacher Dashboard -->
+        <section id="teacher-dashboard" class="bg-white shadow-lg rounded-xl p-6 hidden">
+            <h2 class="text-3xl font-bold text-center text-gray-800 mb-6">Teacher Dashboard</h2>
+            <p class="text-lg text-gray-700 mb-4">Welcome, Teacher! Here are your students' details:</p>
+            <div class="overflow-x-auto">
+                <table id="teacher-students-table" class="min-w-full bg-white border border-gray-200 rounded-md">
+                    <thead>
+                        <tr class="bg-gray-100 border-b">
+                            <th class="py-2 px-4 text-left text-sm font-semibold text-gray-600">Student Name</th>
+                            <th class="py-2 px-4 text-left text-sm font-semibold text-gray-600">Class</th>
+                            <th class="py-2 px-4 text-left text-sm font-semibold text-gray-600">Section</th>
+                            <th class="py-2 px-4 text-left text-sm font-semibold text-gray-600">Course</th>
+                            <th class="py-2 px-4 text-left text-sm font-semibold text-gray-600">Document</th>
+                            <th class="py-2 px-4 text-left text-sm font-semibold text-gray-600">Grade</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <!-- Student rows with grade inputs will be rendered here by JavaScript -->
+                    </tbody>
+                </table>
+            </div>
+            <div class="text-center mt-6">
+                <button id="submit-grades-btn" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline">
+                    Submit All Grades
+                </button>
+            </div>
+            <div id="teacher-message" class="mt-4 text-center text-green-500 hidden"></div>
+        </section>
+
+        <!-- Student Dashboard -->
+        <section id="student-dashboard" class="bg-white shadow-lg rounded-xl p-6 hidden">
+            <h2 class="text-3xl font-bold text-center text-gray-800 mb-6">Student Dashboard</h2>
+            <p class="text-lg text-gray-700 mb-4">Welcome, Student! Update your details and upload documents here:</p>
+            <form id="student-dashboard-form" class="max-w-md mx-auto">
+                <div class="mb-4">
+                    <label for="student-name" class="block text-gray-700 text-sm font-bold mb-2">Name:</label>
+                    <input type="text" id="student-name" name="student-name" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" placeholder="Your Full Name">
+                </div>
+                <div class="mb-4 flex space-x-4">
+                    <div class="w-1/2">
+                        <label for="student-class" class="block text-gray-700 text-sm font-bold mb-2">Class:</label>
+                        <input type="text" id="student-class" name="student-class" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" placeholder="e.g., 10th">
+                    </div>
+                    <div class="w-1/2">
+                        <label for="student-section" class="block text-gray-700 text-sm font-bold mb-2">Section:</label>
+                        <input type="text" id="student-section" name="student-section" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" placeholder="e.g., A">
+                    </div>
+                </div>
+                <div class="mb-4">
+                    <label for="student-course" class="block text-gray-700 text-sm font-bold mb-2">Course:</label>
+                    <input type="text" id="student-course" name="student-course" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" placeholder="e.g., Computer Science">
+                </div>
+                <div class="mb-6">
+                    <label for="pdf-upload" class="block w-full text-sm text-gray-700 font-bold mb-2">Upload Document (PDF):</label>
+                    <input type="file" id="pdf-upload" name="pdf-upload" accept=".pdf" class="block w-full text-sm text-gray-700
+                        file:mr-4 file:py-2 file:px-4
+                        file:rounded-full file:border-0
+                        file:text-sm file:font-semibold
+                        file:bg-blue-50 file:text-blue-700
+                        hover:file:bg-blue-100">
+                </div>
+                <div class="flex items-center justify-center">
+                    <button type="submit" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline">
+                        Save Details
+                    </button>
+                </div>
+                <div id="student-dashboard-message" class="mt-4 text-center text-red-500 hidden"></div>
+            </form>
+        </section>
+    </main>
+
+    <!-- Footer Section -->
+    <footer class="bg-gray-800 text-white p-4 mt-8">
+        <div class="container mx-auto text-center">
+            <p>&copy; 2025 Harmony High School. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            // --- Image Slideshow Logic ---
+            const images = document.querySelectorAll('.image-container img');
+            let currentImageIndex = 0;
+
+            function showImage(index) {
+                images.forEach((img) => {
+                    img.classList.remove('active');
+                });
+                images[index].classList.add('active');
+            }
+
+            function nextImage() {
+                currentImageIndex = (currentImageIndex + 1) % images.length;
+                showImage(currentImageIndex);
+            }
+
+            showImage(currentImageIndex);
+            setInterval(nextImage, 5000);
+
+            // --- Section Elements ---
+            const homeSection = document.getElementById('home');
+            const aboutSection = document.getElementById('about-section');
+            const contactSection = document.getElementById('contact-section');
+            const loginSection = document.getElementById('login-section');
+            const adminDashboard = document.getElementById('admin-dashboard');
+            const teacherDashboard = document.getElementById('teacher-dashboard');
+            const studentDashboard = document.getElementById('student-dashboard');
+
+            // --- Admin Sub-sections ---
+            const adminStudentsManagement = document.getElementById('admin-students-management');
+            const adminTeachersManagement = document.getElementById('admin-teachers-management');
+
+            // --- Navigation Buttons ---
+            const homeButton = document.getElementById('home-button');
+            const aboutButton = document.getElementById('about-button');
+            const contactButton = document.getElementById('contact-button');
+            const loginButton = document.getElementById('login-button');
+            const logoutButton = document.getElementById('logout-button');
+
+            // --- Login Form Elements ---
+            const loginForm = document.getElementById('login-form');
+            const loginMessage = document.getElementById('login-message');
+
+            // --- Admin Dashboard Buttons ---
+            const manageStudentsBtn = document.getElementById('manage-students-btn');
+            const manageTeachersBtn = document.getElementById('manage-teachers-btn');
+
+            // --- Admin Student Form Elements ---
+            const studentForm = document.getElementById('student-form');
+            const studentIdInput = document.getElementById('student-id');
+            const studentNameInput = document.getElementById('student-mgmt-name');
+            const studentAgeInput = document.getElementById('student-mgmt-age');
+            const studentClassInput = document.getElementById('student-mgmt-class');
+            const studentSectionInput = document.getElementById('student-mgmt-section');
+            const studentCourseInput = document.getElementById('student-mgmt-course');
+            const studentsTableBody = document.querySelector('#students-table tbody');
+
+            // --- Admin Teacher Form Elements ---
+            const teacherForm = document.getElementById('teacher-form');
+            const teacherIdInput = document.getElementById('teacher-id');
+            const teacherNameInput = document.getElementById('teacher-mgmt-name');
+            const teacherSubjectInput = document.getElementById('teacher-mgmt-subject');
+            const teacherExperienceInput = document.getElementById('teacher-mgmt-experience');
+            const teacherQualificationInput = document.getElementById('teacher-mgmt-qualification');
+            const teacherContactInput = document.getElementById('teacher-mgmt-contact');
+            const teachersTableBody = document.querySelector('#teachers-table tbody');
+
+            // --- Teacher Dashboard Elements ---
+            const teacherStudentsTableBody = document.querySelector('#teacher-students-table tbody');
+            const submitGradesBtn = document.getElementById('submit-grades-btn');
+            const teacherMessage = document.getElementById('teacher-message');
+
+            // --- Student Dashboard Elements ---
+            const studentDashboardForm = document.getElementById('student-dashboard-form');
+            const studentDashboardNameInput = document.getElementById('student-name');
+            const studentDashboardClassInput = document.getElementById('student-class');
+            const studentDashboardSectionInput = document.getElementById('student-section');
+            const studentDashboardCourseInput = document.getElementById('student-course');
+            const studentDashboardPdfUpload = document.getElementById('pdf-upload');
+            const studentDashboardMessage = document.getElementById('student-dashboard-message');
+
+
+            let loggedInRole = null; // To keep track of the logged-in user's role
+            let students = [ // Mock student data
+                { id: 1, name: 'John Doe', age: 16, class: '10th', section: 'A', course: 'Mathematics', document: 'john_math_hw.pdf', grade: '' },
+                { id: 2, name: 'Jane Smith', age: 15, class: '9th', section: 'B', course: 'Science', document: 'jane_science_project.pdf', grade: '' },
+                { id: 3, name: 'Mike Johnson', age: 17, class: '11th', section: 'C', course: 'History', document: 'mike_history_essay.pdf', grade: '' }
+            ];
+            let teachers = [ // Mock teacher data
+                { id: 1, name: 'Mr. Davis', subject: 'Mathematics', experience: 10, qualification: 'M.Sc. Math', contact: 'davis@harmony.edu' },
+                { id: 2, name: 'Ms. White', subject: 'Science', experience: 8, qualification: 'Ph.D. Biology', contact: 'white@harmony.edu' }
+            ];
+
+            // --- Utility Functions ---
+
+            /**
+             * Hides all content sections and admin sub-sections.
+             */
+            function hideAllSections() {
+                homeSection.classList.add('hidden');
+                aboutSection.classList.add('hidden');
+                contactSection.classList.add('hidden');
+                loginSection.classList.add('hidden');
+                adminDashboard.classList.add('hidden');
+                teacherDashboard.classList.add('hidden');
+                studentDashboard.classList.add('hidden');
+                adminStudentsManagement.classList.add('hidden');
+                adminTeachersManagement.classList.add('hidden');
+            }
+
+            /**
+             * Shows a specific section and hides all others.
+             * @param {HTMLElement} sectionToShow - The section element to display.
+             */
+            function showSection(sectionToShow) {
+                hideAllSections();
+                sectionToShow.classList.remove('hidden');
+            }
+
+            /**
+             * Updates the visibility of navigation buttons based on login status.
+             */
+            function updateNavButtons() {
+                if (loggedInRole) {
+                    loginButton.classList.add('hidden');
+                    logoutButton.classList.remove('hidden');
+                    homeButton.classList.add('hidden');
+                    aboutButton.classList.add('hidden');
+                    contactButton.classList.add('hidden');
+                } else {
+                    loginButton.classList.remove('hidden');
+                    logoutButton.classList.add('hidden');
+                    homeButton.classList.remove('hidden');
+                    aboutButton.classList.remove('hidden');
+                    contactButton.classList.remove('hidden');
+                }
+            }
+
+            // --- Admin Dashboard Functions ---
+
+            /**
+             * Renders the students table in the admin dashboard.
+             */
+            function renderStudentsTable() {
+                studentsTableBody.innerHTML = ''; // Clear existing rows
+                students.forEach(student => {
+                    const row = studentsTableBody.insertRow();
+                    row.innerHTML = `
+                        <td class="py-2 px-4">${student.name}</td>
+                        <td class="py-2 px-4">${student.age}</td>
+                        <td class="py-2 px-4">${student.class}</td>
+                        <td class="py-2 px-4">${student.section}</td>
+                        <td class="py-2 px-4">${student.course}</td>
+                        <td class="py-2 px-4">
+                            <button data-id="${student.id}" class="edit-student-btn bg-yellow-500 hover:bg-yellow-700 text-white text-sm py-1 px-2 rounded mr-2">Edit</button>
+                            <button data-id="${student.id}" class="delete-student-btn bg-red-500 hover:bg-red-700 text-white text-sm py-1 px-2 rounded">Delete</button>
+                        </td>
+                    `;
+                });
+
+                // Add event listeners for edit and delete buttons
+                document.querySelectorAll('.edit-student-btn').forEach(button => {
+                    button.addEventListener('click', (event) => {
+                        const id = parseInt(event.target.dataset.id);
+                        const studentToEdit = students.find(s => s.id === id);
+                        if (studentToEdit) {
+                            studentIdInput.value = studentToEdit.id;
+                            studentNameInput.value = studentToEdit.name;
+                            studentAgeInput.value = studentToEdit.age;
+                            studentClassInput.value = studentToEdit.class;
+                            studentSectionInput.value = studentToEdit.section;
+                            studentCourseInput.value = studentToEdit.course;
+                        }
+                    });
+                });
+
+                document.querySelectorAll('.delete-student-btn').forEach(button => {
+                    button.addEventListener('click', (event) => {
+                        const id = parseInt(event.target.dataset.id);
+                        students = students.filter(s => s.id !== id);
+                        renderStudentsTable(); // Re-render table after deletion
+                        renderTeacherStudentsTable(); // Update teacher's view as well
+                    });
+                });
+            }
+
+            /**
+             * Handles adding or updating a student.
+             */
+            studentForm.addEventListener('submit', (event) => {
+                event.preventDefault();
+                const id = studentIdInput.value ? parseInt(studentIdInput.value) : null;
+                const name = studentNameInput.value.trim();
+                const age = parseInt(studentAgeInput.value);
+                const studentClass = studentClassInput.value.trim();
+                const section = studentSectionInput.value.trim();
+                const course = studentCourseInput.value.trim();
+
+                if (!name || !age || !studentClass || !section || !course) {
+                    alert('Please fill in all student fields.'); // Using alert for simplicity, replace with custom modal
+                    return;
+                }
+
+                if (id) {
+                    // Update existing student
+                    const index = students.findIndex(s => s.id === id);
+                    if (index !== -1) {
+                        students[index] = { ...students[index], name, age, class: studentClass, section, course };
+                    }
+                } else {
+                    // Add new student
+                    const newId = students.length > 0 ? Math.max(...students.map(s => s.id)) + 1 : 1;
+                    students.push({ id: newId, name, age, class: studentClass, section, course, document: '', grade: '' });
+                }
+                studentForm.reset(); // Clear form
+                studentIdInput.value = ''; // Clear hidden ID
+                renderStudentsTable(); // Re-render table
+                renderTeacherStudentsTable(); // Update teacher's view
+            });
+
+            /**
+             * Renders the teachers table in the admin dashboard.
+             */
+            function renderTeachersTable() {
+                teachersTableBody.innerHTML = ''; // Clear existing rows
+                teachers.forEach(teacher => {
+                    const row = teachersTableBody.insertRow();
+                    row.innerHTML = `
+                        <td class="py-2 px-4">${teacher.name}</td>
+                        <td class="py-2 px-4">${teacher.subject}</td>
+                        <td class="py-2 px-4">${teacher.experience}</td>
+                        <td class="py-2 px-4">${teacher.qualification}</td>
+                        <td class="py-2 px-4">${teacher.contact}</td>
+                        <td class="py-2 px-4">
+                            <button data-id="${teacher.id}" class="edit-teacher-btn bg-yellow-500 hover:bg-yellow-700 text-white text-sm py-1 px-2 rounded mr-2">Edit</button>
+                            <button data-id="${teacher.id}" class="delete-teacher-btn bg-red-500 hover:bg-red-700 text-white text-sm py-1 px-2 rounded">Delete</button>
+                        </td>
+                    `;
+                });
+
+                // Add event listeners for edit and delete buttons
+                document.querySelectorAll('.edit-teacher-btn').forEach(button => {
+                    button.addEventListener('click', (event) => {
+                        const id = parseInt(event.target.dataset.id);
+                        const teacherToEdit = teachers.find(t => t.id === id);
+                        if (teacherToEdit) {
+                            teacherIdInput.value = teacherToEdit.id;
+                            teacherNameInput.value = teacherToEdit.name;
+                            teacherSubjectInput.value = teacherToEdit.subject;
+                            teacherExperienceInput.value = teacherToEdit.experience;
+                            teacherQualificationInput.value = teacherToEdit.qualification;
+                            teacherContactInput.value = teacherToEdit.contact;
+                        }
+                    });
+                });
+
+                document.querySelectorAll('.delete-teacher-btn').forEach(button => {
+                    button.addEventListener('click', (event) => {
+                        const id = parseInt(event.target.dataset.id);
+                        teachers = teachers.filter(t => t.id !== id);
+                        renderTeachersTable(); // Re-render table after deletion
+                    });
+                });
+            }
+
+            /**
+             * Handles adding or updating a teacher.
+             */
+            teacherForm.addEventListener('submit', (event) => {
+                event.preventDefault();
+                const id = teacherIdInput.value ? parseInt(teacherIdInput.value) : null;
+                const name = teacherNameInput.value.trim();
+                const subject = teacherSubjectInput.value.trim();
+                const experience = parseInt(teacherExperienceInput.value);
+                const qualification = teacherQualificationInput.value.trim();
+                const contact = teacherContactInput.value.trim();
+
+                if (!name || !subject || !experience || !qualification || !contact) {
+                    alert('Please fill in all teacher fields.'); // Using alert for simplicity, replace with custom modal
+                    return;
+                }
+
+                if (id) {
+                    // Update existing teacher
+                    const index = teachers.findIndex(t => t.id === id);
+                    if (index !== -1) {
+                        teachers[index] = { ...teachers[index], name, subject, experience, qualification, contact };
+                    }
+                } else {
+                    // Add new teacher
+                    const newId = teachers.length > 0 ? Math.max(...teachers.map(t => t.id)) + 1 : 1;
+                    teachers.push({ id: newId, name, subject, experience, qualification, contact });
+                }
+                teacherForm.reset(); // Clear form
+                teacherIdInput.value = ''; // Clear hidden ID
+                renderTeachersTable(); // Re-render table
+            });
+
+            // --- Teacher Dashboard Functions ---
+
+            /**
+             * Renders the students table for the teacher dashboard.
+             */
+            function renderTeacherStudentsTable() {
+                teacherStudentsTableBody.innerHTML = ''; // Clear existing rows
+                students.forEach(student => {
+                    const row = teacherStudentsTableBody.insertRow();
+                    row.innerHTML = `
+                        <td class="py-2 px-4">${student.name}</td>
+                        <td class="py-2 px-4">${student.class}</td>
+                        <td class="py-2 px-4">${student.section}</td>
+                        <td class="py-2 px-4">${student.course}</td>
+                        <td class="py-2 px-4">
+                            ${student.document ? `<button class="bg-blue-500 hover:bg-blue-700 text-white text-sm py-1 px-2 rounded" onclick="alert('Downloading ${student.document}...')">Download PDF</button>` : 'N/A'}
+                        </td>
+                        <td class="py-2 px-4">
+                            <input type="text" data-id="${student.id}" class="grade-input w-20 border rounded px-2 py-1 text-sm" placeholder="Grade" value="${student.grade}">
+                        </td>
+                    `;
+                });
+            }
+
+            /**
+             * Handles submitting all grades from the teacher dashboard.
+             */
+            submitGradesBtn.addEventListener('click', () => {
+                const gradeInputs = document.querySelectorAll('.grade-input');
+                let gradesUpdated = false;
+                gradeInputs.forEach(input => {
+                    const studentId = parseInt(input.dataset.id);
+                    const newGrade = input.value.trim();
+                    const studentIndex = students.findIndex(s => s.id === studentId);
+                    if (studentIndex !== -1 && students[studentIndex].grade !== newGrade) {
+                        students[studentIndex].grade = newGrade;
+                        gradesUpdated = true;
+                    }
+                });
+
+                if (gradesUpdated) {
+                    teacherMessage.textContent = 'Grades submitted successfully!';
+                    teacherMessage.classList.remove('hidden');
+                    teacherMessage.classList.remove('text-red-500');
+                    teacherMessage.classList.add('text-green-500');
+                } else {
+                    teacherMessage.textContent = 'No grades were changed.';
+                    teacherMessage.classList.remove('hidden');
+                    teacherMessage.classList.remove('text-green-500');
+                    teacherMessage.classList.add('text-red-500');
+                }
+                // Hide message after a few seconds
+                setTimeout(() => {
+                    teacherMessage.classList.add('hidden');
+                }, 3000);
+            });
+
+            // --- Student Dashboard Functions ---
+
+            /**
+             * Handles saving student details from the student dashboard.
+             */
+            studentDashboardForm.addEventListener('submit', (event) => {
+                event.preventDefault();
+                const name = studentDashboardNameInput.value.trim();
+                const studentClass = studentDashboardClassInput.value.trim();
+                const section = studentDashboardSectionInput.value.trim();
+                const course = studentDashboardCourseInput.value.trim();
+                const pdfFile = studentDashboardPdfUpload.files[0];
+
+                studentDashboardMessage.classList.add('hidden'); // Hide previous messages
+
+                if (!name || !studentClass || !section || !course) {
+                    studentDashboardMessage.textContent = 'Please fill in all required fields (Name, Class, Section, Course).';
+                    studentDashboardMessage.classList.remove('hidden');
+                    studentDashboardMessage.classList.remove('text-green-500');
+                    studentDashboardMessage.classList.add('text-red-500');
+                    return;
+                }
+
+                // In a real application, you would handle PDF upload to a server here.
+                // For this mock, we just acknowledge the file.
+                let documentName = '';
+                if (pdfFile) {
+                    documentName = pdfFile.name;
+                    // Simulate upload success
+                    console.log(`Simulating PDF upload: ${documentName}`);
+                }
+
+                // For simplicity, let's assume the student dashboard updates a specific student (e.g., student with ID 1)
+                // In a real app, this would be tied to the logged-in student's ID.
+                const studentToUpdateIndex = students.findIndex(s => s.id === 1); // Mocking update for first student
+                if (studentToUpdateIndex !== -1) {
+                    students[studentToUpdateIndex].name = name;
+                    students[studentToUpdateIndex].class = studentClass;
+                    students[studentToUpdateIndex].section = section;
+                    students[studentToUpdateIndex].course = course;
+                    if (documentName) {
+                        students[studentToUpdateIndex].document = documentName;
+                    }
+                    studentDashboardMessage.textContent = 'Student details saved successfully!';
+                    studentDashboardMessage.classList.remove('hidden');
+                    studentDashboardMessage.classList.remove('text-red-500');
+                    studentDashboardMessage.classList.add('text-green-500');
+                } else {
+                    studentDashboardMessage.textContent = 'Error: Could not find student to update.';
+                    studentDashboardMessage.classList.remove('hidden');
+                    studentDashboardMessage.classList.remove('text-green-500');
+                    studentDashboardMessage.classList.add('text-red-500');
+                }
+
+                // Update teacher's view after student details are saved
+                renderTeacherStudentsTable();
+
+                // Hide message after a few seconds
+                setTimeout(() => {
+                    studentDashboardMessage.classList.add('hidden');
+                }, 3000);
+            });
+
+
+            // --- Event Listeners for Navigation Buttons ---
+            homeButton.addEventListener('click', () => {
+                showSection(homeSection);
+            });
+
+            aboutButton.addEventListener('click', () => {
+                showSection(aboutSection);
+            });
+
+            contactButton.addEventListener('click', () => {
+                showSection(contactSection);
+            });
+
+            loginButton.addEventListener('click', () => {
+                showSection(loginSection);
+            });
+
+            logoutButton.addEventListener('click', () => {
+                loggedInRole = null; // Clear the logged-in role
+                showSection(homeSection); // Go back to the home page
+                updateNavButtons(); // Update navigation buttons
+            });
+
+            // --- Login Form Submission ---
+            loginForm.addEventListener('submit', (event) => {
+                event.preventDefault();
+
+                const role = document.getElementById('role').value;
+                const username = document.getElementById('username').value;
+                const password = document.getElementById('password').value;
+
+                loginMessage.classList.add('hidden');
+
+                if (!role || !username || !password) {
+                    loginMessage.textContent = 'Please fill in all fields.';
+                    loginMessage.classList.remove('hidden');
+                    return;
+                }
+
+                let isAuthenticated = false;
+                let dashboardToShow = null;
+
+                if (role === 'admin' && username === 'admin' && password === 'admin') {
+                    isAuthenticated = true;
+                    dashboardToShow = adminDashboard;
+                    renderStudentsTable(); // Render tables when admin logs in
+                    renderTeachersTable();
+                    adminStudentsManagement.classList.remove('hidden'); // Show students management by default for admin
+                    adminTeachersManagement.classList.add('hidden');
+                } else if (role === 'teacher' && username === 'teacher' && password === 'teacher') {
+                    isAuthenticated = true;
+                    dashboardToShow = teacherDashboard;
+                    renderTeacherStudentsTable(); // Render students for teacher
+                } else if (role === 'student' && username === 'student' && password === 'student') {
+                    isAuthenticated = true;
+                    dashboardToShow = studentDashboard;
+                    // Pre-fill student dashboard form if data exists (mocking for student with ID 1)
+                    const currentStudent = students.find(s => s.id === 1);
+                    if (currentStudent) {
+                        studentDashboardNameInput.value = currentStudent.name;
+                        studentDashboardClassInput.value = currentStudent.class;
+                        studentDashboardSectionInput.value = currentStudent.section;
+                        studentDashboardCourseInput.value = currentStudent.course;
+                    }
+                }
+
+                if (isAuthenticated) {
+                    loggedInRole = role;
+                    showSection(dashboardToShow);
+                    updateNavButtons();
+                    loginForm.reset();
+                } else {
+                    loginMessage.textContent = 'Invalid role, username, or password.';
+                    loginMessage.classList.remove('hidden');
+                }
+            });
+
+            // --- Admin Dashboard Sub-section Navigation ---
+            manageStudentsBtn.addEventListener('click', () => {
+                adminStudentsManagement.classList.remove('hidden');
+                adminTeachersManagement.classList.add('hidden');
+                renderStudentsTable(); // Ensure table is up-to-date
+            });
+
+            manageTeachersBtn.addEventListener('click', () => {
+                adminTeachersManagement.classList.remove('hidden');
+                adminStudentsManagement.classList.add('hidden');
+                renderTeachersTable(); // Ensure table is up-to-date
+            });
+
+            // Initial setup
+            showSection(homeSection);
+            updateNavButtons();
+        });
+    </script>
+</body>
+</html>
